@@ -81,6 +81,7 @@
     <None Include="packages.config" />
     <None Include="sss" />
     <Compile Include="Class1.cs" />
+    <Compile Include="Params.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

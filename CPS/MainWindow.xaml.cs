@@ -21,6 +21,7 @@ namespace CPS
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml
     /// </summary>
+    /// 
     public partial class MainWindow : Window
     {
        public double SineSignal(double time)
@@ -33,6 +34,7 @@ namespace CPS
         public MainWindow()
         {
             InitializeComponent();
+            
 
             double T1_StartTime = 0;
             double D_DurationOfTheSignal = 5;
@@ -65,10 +67,23 @@ namespace CPS
         }
 
         public SeriesCollection SeriesCollection { get; set; }
-        public string[] Labels { get; set; }
         public Func<double, string> XFormatter { get; set; }
         public Func<double, string> YFormatter { get; set; }
 
+        
+        private void draw_Click(object sender, RoutedEventArgs e)
+        {
+            double A = 1;
+            double T = 1;
+            double T1 = 0;
+
+            A = Double.Parse(amplitude.Text);
+            
+            
+
+        }
     }
+
+
 
 }
