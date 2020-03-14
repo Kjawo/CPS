@@ -1,32 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CPS.Signal;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using LiveCharts;
-using LiveCharts.Wpf;
 
 namespace CPS
 {
 
     public partial class MainWindow : Window
     {
-        private ChartWrapper ChartWrapper = new ChartWrapper();
+        public double A { get; set; } = 1;
+        public double t1 { get; set; } = 0;
+        public double T { get; set; } = 3.14;
+        public double d { get; set; } = 3.14;
+        public ChartWrapper ChartWrapper = new ChartWrapper();
+
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
             Chart.DataContext = ChartWrapper;
-            ChartWrapper.Generate();
+
+            Generate(null, null);
         }
+
+        public void Generate(object sender, RoutedEventArgs e)
+        {
+            Params p = new Params();
+            p.A = A;
+            p.d = d;
+            p.T = T;
+            p.t1 = t1;
+            ChartWrapper.UpdateSignal(p);
+        }
+
     }
 }

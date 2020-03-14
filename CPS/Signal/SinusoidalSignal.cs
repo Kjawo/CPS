@@ -4,14 +4,14 @@ namespace CPS.Signal
 {
     class SinusoidalSignal : ISignal
     {
-        private Params par = new Params();
+        private Params p = new Params();
 
         public SinusoidalSignal()
         {
-            par.A = 1;
-            par.d = 10;
-            par.T = 1;
-            par.t1 = 0;
+            p.A = 1;
+            p.d = 10;
+            p.T = 1;
+            p.t1 = 0;
         }
 
         public string Name()
@@ -21,17 +21,17 @@ namespace CPS.Signal
 
         public double y(double x)
         {
-            return Math.Sin(x);
+            return p.A * Math.Sin(2 * Math.PI / p.T * (x - p.t1));
         }
 
         public Params Params()
         {
-            return par;
+            return p;
         }
 
         public void SetParams(Params Params)
         {
-            par = Params;
+            p = Params;
         }
 
     }
