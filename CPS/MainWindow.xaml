@@ -13,10 +13,9 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         
-        
-        <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Right" Grid.Row="0">
+        <lvc:CartesianChart x:Name="Chart" Series="{Binding SeriesCollection}" LegendLocation="Right" Grid.Row="0">
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Y" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+                <lvc:Axis Title="Y" Labels="{Binding YFormatter}"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="X" Labels="{Binding XFormatter}"></lvc:Axis>
@@ -52,7 +51,7 @@
                 <Label Content="Okres podstawowy (T)" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right"/>
                 <TextBox x:Name="T" Grid.Column="1" Grid.Row="3" Margin="10,5"/>
                 
-                <Button x:Name="draw" Content="Rysuj" Grid.Column="1" Grid.Row="4" Margin="10,3" Click="draw_Click"/>
+                <Button Content="Rysuj" Grid.Column="1" Grid.Row="4" Margin="10,3"/>
             </Grid>
         </Grid>
     </Grid>

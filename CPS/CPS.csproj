@@ -70,6 +70,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Signal\ISignal.cs" />
+    <Compile Include="Signal\Params.cs" />
+    <Compile Include="Signal\SinusoidalSignal.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,9 +82,7 @@
       <SubType>Code</SubType>
     </Compile>
     <None Include="packages.config" />
-    <None Include="sss" />
-    <Compile Include="Class1.cs" />
-    <Compile Include="Params.cs" />
+    <Compile Include="ChartWrapper.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
