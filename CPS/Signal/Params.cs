@@ -2,10 +2,10 @@
 {
     public class Params
     {
-        public double A { get; set; }
-        public double T { get; set; }
-        public double t1 { get; set; }
-        public double d { get; set; }
+        public double A { get; set; } = 1;
+        public double T { get; set; } = 1;
+        public double t1 { get; set; } = 0;
+        public double d { get; set; } = 1;
 
     }
 }

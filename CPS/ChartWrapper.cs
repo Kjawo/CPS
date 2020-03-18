@@ -13,47 +13,55 @@ namespace CPS
         public Func<double, string> XFormatter { get; } = value => value.ToString();
         public Func<double, string> YFormatter { get; } = value => value.ToString();
         public double Frequency { get; set; } = 100;
-        private ISignal CurrentSignal;
+        private ISignal FirstSignal;
+        private ISignal SecondSignal;
 
         public ChartWrapper()
         {
-            CurrentSignal = new SinusoidalSignal();
+            FirstSignal = new SinusoidalSignal();
+            SecondSignal = new SinusoidalSignal();
         }
 
-        public void UpdateSignal(Params Params)
+        public void UpdateSignal(Params FirstParams, Params SecondParams)
         {
-            CurrentSignal.SetParams(Params);
+            FirstSignal.SetParams(FirstParams);
+            SecondSignal.SetParams(SecondParams);
             Generate();
         }
 
         private void Generate()
         {
             SeriesCollection.Clear();
+            AddSeriesForSignal(FirstSignal);
+            AddSeriesForSignal(SecondSignal);
+        }
+
+        private void AddSeriesForSignal(ISignal Signal)
+        {
             ChartValues<ObservablePoint> values = new ChartValues<ObservablePoint>();
 
-            double from = CurrentSignal.Params().t1;
-            double to = from + CurrentSignal.Params().d;
-            double step = CurrentSignal.Params().d / Frequency;
+            double from = Signal.Params().t1;
+            double to = from + Signal.Params().d;
+            double step = Signal.Params().d / Frequency;
             for (double x = from; x <= to; x += step)
             {
                 values.Add(
                     new ObservablePoint
                     {
                         X = x,
-                        Y = CurrentSignal.y(x)
+                        Y = Signal.y(x)
                     }
                 );
             }
 
             LineSeries ls = new LineSeries
             {
-                Title = CurrentSignal.Name(),
+                Title = Signal.Name(),
                 Values = values,
-                
+
             };
 
             SeriesCollection.Add(ls);
         }
-
     }
 }
