@@ -32,6 +32,7 @@ namespace CPS
             {
                 Title = Signal.Name,
                 Values = values,
+                Fill = System.Windows.Media.Brushes.Transparent,
                 PointGeometry = null
             };
 

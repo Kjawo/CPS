@@ -17,14 +17,35 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <lvc:CartesianChart x:Name="Chart" Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="20,20,20,0" DisableAnimations="True">
-            <lvc:CartesianChart.AxisY>
-                <lvc:Axis Title="Y" Labels="{Binding YFormatter}"></lvc:Axis>
-            </lvc:CartesianChart.AxisY>
-            <lvc:CartesianChart.AxisX>
-                <lvc:Axis Title="X" Labels="{Binding XFormatter}"></lvc:Axis>
-            </lvc:CartesianChart.AxisX>
-        </lvc:CartesianChart>
+        <TabControl>
+            <TabItem>
+                <TabItem.Header>
+                    <Label Content="Wykres" />
+                </TabItem.Header>
+                <lvc:CartesianChart x:Name="Chart" Series="{Binding SeriesCollection}" LegendLocation="Bottom" DisableAnimations="True" Margin="5">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Y" Labels="{Binding YFormatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="X" Labels="{Binding XFormatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Label Content="Histogram" />
+                </TabItem.Header>
+                <lvc:CartesianChart x:Name="Histogram" Series="{Binding SeriesCollection}" LegendLocation="Bottom" DisableAnimations="True" Margin="5">
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Y" Labels="{Binding YFormatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="X" Labels="{Binding XFormatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                </lvc:CartesianChart>
+            </TabItem>
+        </TabControl>
+        
 
         <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Top">
             <Grid.RowDefinitions>

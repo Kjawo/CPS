@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Generator.cs" />
+    <Compile Include="HistogramWrapper.cs" />
     <Compile Include="Signal\AmplitudeOperationsSignal.cs" />
     <Compile Include="Signal\DiscreteSignal.cs" />
     <Compile Include="Signal\ISignal.cs" />

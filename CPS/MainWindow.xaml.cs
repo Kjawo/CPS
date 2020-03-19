@@ -16,6 +16,7 @@ namespace CPS
         private Params FirstSignalParams = new Params();
         private Params SecondSignalParams = new Params();
         private ChartWrapper ChartWrapper = new ChartWrapper();
+        private HistogramWrapper HistogramWrapper = new HistogramWrapper();
         public double Frequency { get; set; } = 100;
         public bool SecondSignalEnabled { get; set; } = false;
         public List<ModeWrapper> ModeList { get; } = new List<ModeWrapper>
@@ -33,6 +34,7 @@ namespace CPS
             InitializeComponent();
             this.DataContext = this;
             Chart.DataContext = ChartWrapper;
+            Histogram.DataContext = HistogramWrapper;
             SecondSignalEnabler.DataContext = this;
             FirstSignalParamGrid.DataContext = FirstSignalParams;
             SecondSignalParamGrid.DataContext = SecondSignalParams;
@@ -45,6 +47,8 @@ namespace CPS
         public void Generate(object sender, RoutedEventArgs e)
         {
             ChartWrapper.Clear();
+            HistogramWrapper.Clear();
+
             ISignal s1 = new SinusoidalSignal();
             ISignal s2 = new SinusoidalSignal();
             s1.SetParams(FirstSignalParams);
@@ -57,6 +61,7 @@ namespace CPS
                                  .withMode(SelectedMode.Mode)
                                  .build();
             ChartWrapper.AddSeries(ds1);
+            HistogramWrapper.AddSeries(ds1);
 
             if (SecondSignalEnabled && SelectedMode.Mode == Mode.DEFAULT)
             {
@@ -66,6 +71,7 @@ namespace CPS
                                  .withMode(SelectedMode.Mode)
                                  .build();
                 ChartWrapper.AddSeries(ds2);
+                HistogramWrapper.AddSeries(ds2);
             }
         }
 
