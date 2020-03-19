@@ -45,7 +45,7 @@ namespace CPS
 
         public DiscreteSignal build()
         {
-            return new DiscreteSignal();
+            return new DiscreteSignal(Frequency, FirstSignal);
         }
 
     }
