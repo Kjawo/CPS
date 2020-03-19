@@ -42,9 +42,9 @@ namespace CPS
         public DiscreteSignal build()
         {
             ISignal SignalToBuild = FirstSignal;
-            if (OutputMode == Mode.SUM)
+            if (OutputMode != Mode.DEFAULT)
             {
-                SignalToBuild = new SumSignal(FirstSignal, SecondSignal);
+                SignalToBuild = new AmplitudeOperationSignal(FirstSignal, SecondSignal, OutputMode);
             }
             return new DiscreteSignal(Frequency, SignalToBuild);
         }

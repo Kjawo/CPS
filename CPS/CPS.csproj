@@ -71,11 +71,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Generator.cs" />
+    <Compile Include="Signal\AmplitudeOperationsSignal.cs" />
     <Compile Include="Signal\DiscreteSignal.cs" />
     <Compile Include="Signal\ISignal.cs" />
     <Compile Include="Signal\Params.cs" />
     <Compile Include="Signal\SinusoidalSignal.cs" />
-    <Compile Include="Signal\SumSignal.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

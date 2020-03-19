@@ -22,6 +22,9 @@ namespace CPS
         {
             new ModeWrapper { Name = "Domyślny", Mode = Mode.DEFAULT },
             new ModeWrapper { Name = "Suma", Mode = Mode.SUM },
+            new ModeWrapper { Name = "Różnica", Mode = Mode.DIFF },
+            new ModeWrapper { Name = "Iloczyn", Mode = Mode.MUL },
+            new ModeWrapper { Name = "Iloraz", Mode = Mode.DIV },
         };
         public ModeWrapper SelectedMode { get; set; }
 
