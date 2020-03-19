@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using CPS.Signal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPS
 {
-    class Generator
+    public class Generator
     {
         public enum Mode
         {
@@ -45,7 +41,12 @@ namespace CPS
 
         public DiscreteSignal build()
         {
-            return new DiscreteSignal(Frequency, FirstSignal);
+            ISignal SignalToBuild = FirstSignal;
+            if (OutputMode == Mode.SUM)
+            {
+                SignalToBuild = new SumSignal(FirstSignal, SecondSignal);
+            }
+            return new DiscreteSignal(Frequency, SignalToBuild);
         }
 
     }

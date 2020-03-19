@@ -1,6 +1,6 @@
 ﻿namespace CPS.Signal
 {
-    interface ISignal
+    public interface ISignal
     {
         string Name();
         double y(double x);

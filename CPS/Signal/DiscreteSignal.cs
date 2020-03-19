@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CPS.Signal
 {
-    class DiscreteSignal
+    public class DiscreteSignal
     {
-        public String Name { get => InputSignal.Name(); }
+        public string Name { get => InputSignal.Name(); }
         private ISignal InputSignal;
         private double Frequency;
         private List<Tuple<double, double>> Values = new List<Tuple<double, double>>();

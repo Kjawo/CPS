@@ -95,7 +95,7 @@
             </Grid>
 
             <Button Click="Generate" Content="Generuj" Grid.Column="2" Margin="62,29,-57,0" Width="75" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <ComboBox x:Name="SignalMode" Grid.Column="2" HorizontalAlignment="Left" Margin="32,67,-73,0" VerticalAlignment="Top" Width="120"/>
+            <ComboBox ItemsSource="{Binding ModeList}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMode}" x:Name="SignalMode" Grid.Column="2" HorizontalAlignment="Left" Margin="32,67,-73,0" VerticalAlignment="Top" Width="120"/>
             <TextBox Text="{Binding Frequency, FallbackValue=100, Mode=TwoWay, StringFormat=\{0:F4\}}" Margin="72,104,-41,26" Width="50" HorizontalAlignment="Left" Grid.Column="2"/>
 
         </Grid>
