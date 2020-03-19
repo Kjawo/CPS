@@ -31,7 +31,8 @@ namespace CPS
             LineSeries ls = new LineSeries
             {
                 Title = Signal.Name,
-                Values = values
+                Values = values,
+                PointGeometry = null
             };
 
             SeriesCollection.Add(ls);

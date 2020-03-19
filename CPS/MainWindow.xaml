@@ -17,7 +17,7 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <lvc:CartesianChart x:Name="Chart" Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="20,20,20,0">
+        <lvc:CartesianChart x:Name="Chart" Series="{Binding SeriesCollection}" LegendLocation="Right" Margin="20,20,20,0" DisableAnimations="True">
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Y" Labels="{Binding YFormatter}"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
