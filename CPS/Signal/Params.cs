@@ -1,6 +1,6 @@
 ﻿namespace CPS.Signal
 {
-    public class Params
+    class Params
     {
         public double A { get; set; } = 1;
         public double T { get; set; } = 1;

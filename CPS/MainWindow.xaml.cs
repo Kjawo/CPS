@@ -8,7 +8,7 @@ namespace CPS
     {
         private Params FirstSignalParams = new Params();
         private Params SecondSignalParams = new Params();
-        public ChartWrapper ChartWrapper = new ChartWrapper();
+        private ChartWrapper ChartWrapper = new ChartWrapper();
 
         public MainWindow()
         {

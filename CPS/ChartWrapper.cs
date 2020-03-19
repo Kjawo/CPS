@@ -7,7 +7,7 @@ using CPS.Signal;
 namespace CPS
 {
 
-    public class ChartWrapper
+    class ChartWrapper
     {
         public SeriesCollection SeriesCollection { get; } = new SeriesCollection();
         public Func<double, string> XFormatter { get; } = value => value.ToString();
