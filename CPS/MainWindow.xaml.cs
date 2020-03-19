@@ -16,6 +16,7 @@ namespace CPS
             SecondSignalParams.T = 0.2;
             this.DataContext = this;
             Chart.DataContext = ChartWrapper;
+            SecondSignalEnabler.DataContext = ChartWrapper;
             FirstSignalParamGrid.DataContext = FirstSignalParams;
             SecondSignalParamGrid.DataContext = SecondSignalParams;
 

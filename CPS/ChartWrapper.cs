@@ -12,6 +12,7 @@ namespace CPS
         public SeriesCollection SeriesCollection { get; } = new SeriesCollection();
         public Func<double, string> XFormatter { get; } = value => value.ToString();
         public Func<double, string> YFormatter { get; } = value => value.ToString();
+        public bool SecondSignalEnabled { get; set; } = true;
         public double Frequency { get; set; } = 100;
         private ISignal FirstSignal;
         private ISignal SecondSignal;
@@ -33,7 +34,10 @@ namespace CPS
         {
             SeriesCollection.Clear();
             AddSeriesForSignal(FirstSignal);
-            AddSeriesForSignal(SecondSignal);
+            if (SecondSignalEnabled)
+            {
+                AddSeriesForSignal(SecondSignal);
+            }
         }
 
         private void AddSeriesForSignal(ISignal Signal)
