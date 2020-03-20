@@ -42,7 +42,8 @@ namespace CPS
         {
             new SignalWrapper() { Name = "Sygnał sinusoidalny", Signal = SignalEnum.sin },
             new SignalWrapper() { Name = "Szum gaussowski", Signal = SignalEnum.gauss },
-            new SignalWrapper() { Name = "Szum o rozkładzie jednostajnym", Signal = SignalEnum.uniformD }
+            new SignalWrapper() { Name = "Szum o rozkładzie jednostajnym", Signal = SignalEnum.uniformD },
+            new SignalWrapper() { Name = "Sygnał sinusoidalny \nwyprostowany jednopołówkowo", Signal = SignalEnum.sinHalfRectified }
         };
         public ModeWrapper SelectedMode { get; set; }
         public SignalWrapper SelectedSignalSecond { get; set; }
