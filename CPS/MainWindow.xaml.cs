@@ -41,7 +41,8 @@ namespace CPS
         public List<SignalWrapper> SignalList { get; } = new List<SignalWrapper>
         {
             new SignalWrapper() { Name = "Sygnał sinusoidalny", Signal = SignalEnum.sin },
-            new SignalWrapper() { Name = "Szum gaussowski", Signal = SignalEnum.gauss }
+            new SignalWrapper() { Name = "Szum gaussowski", Signal = SignalEnum.gauss },
+            new SignalWrapper() { Name = "Szum o rozkładzie jednostajnym", Signal = SignalEnum.uniformD }
         };
         public ModeWrapper SelectedMode { get; set; }
         public SignalWrapper SelectedSignalSecond { get; set; }

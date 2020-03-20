@@ -12,7 +12,7 @@ namespace CPS
         
         public enum SignalEnum
         {
-            sin, gauss
+            sin, gauss, uniformD
         }
 
         private double Frequency = 1;
@@ -62,6 +62,8 @@ namespace CPS
                     return new SinusoidalSignal();
                 case SignalEnum.gauss:
                     return new GaussianNoise();
+                case SignalEnum.uniformD:
+                    return new UniformDistributionNoise();
                 default:
                     return new SinusoidalSignal();
             }
