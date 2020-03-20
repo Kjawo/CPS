@@ -76,7 +76,8 @@
     <Compile Include="Signal\DiscreteSignal.cs" />
     <Compile Include="Signal\BaseSignal.cs" />
     <Compile Include="Signal\Params.cs" />
-    <Compile Include="Signal\SinusoidalSignal.cs" />
+    <Compile Include="Signal\Signals\GaussianNoise.cs" />
+    <Compile Include="Signal\Signals\SinusoidalSignal.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

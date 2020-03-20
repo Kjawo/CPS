@@ -1,4 +1,5 @@
-﻿using CPS.Signal;
+﻿using System;
+using CPS.Signal;
 using System.Collections.Generic;
 using System.Windows;
 using static CPS.Generator;
@@ -9,6 +10,12 @@ namespace CPS
     {
         public string Name { get; set; }
         public Mode Mode { get; set; }
+    }
+
+    public class SignalWrapper
+    {
+        public string Name { get; set; }
+        public SignalEnum Signal { get; set; }
     }
 
     public partial class MainWindow : Window
@@ -28,7 +35,15 @@ namespace CPS
             new ModeWrapper { Name = "Iloczyn", Mode = Mode.MUL },
             new ModeWrapper { Name = "Iloraz", Mode = Mode.DIV },
         };
+        
+        public List<SignalWrapper> SignalList { get; } = new List<SignalWrapper>
+        {
+            new SignalWrapper() { Name = "Sygnał sinusoidalny", Signal = SignalEnum.sin },
+            new SignalWrapper() { Name = "Szum gaussowski", Signal = SignalEnum.gauss }
+        };
         public ModeWrapper SelectedMode { get; set; }
+        public SignalWrapper SelectedSignalSecond { get; set; }
+        public SignalWrapper SelectedSignalFirst { get; set; }
 
         public MainWindow()
         {
@@ -41,18 +56,21 @@ namespace CPS
             SecondSignalParamGrid.DataContext = SecondSignalParams;
             SecondSignalParams.T = 0.2;
             SelectedMode = ModeList[0];
+            
+            SelectedSignalFirst = SignalList[1];
+            SelectedSignalSecond = SignalList[0];
 
             Generate(null, null);
         }
-
+        
         public void Generate(object sender, RoutedEventArgs e)
         {
             ChartWrapper.Clear();
             HistogramWrapper.Clear();
             HistogramWrapper.HistogramGroupsCount = HistogramGroupsCount;
 
-            BaseSignal s1 = new SinusoidalSignal();
-            BaseSignal s2 = new SinusoidalSignal();
+            BaseSignal s1 = GetSelectedSignal(SelectedSignalFirst);
+            BaseSignal s2 = GetSelectedSignal(SelectedSignalSecond);
             s1.SetParams(FirstSignalParams);
             s2.SetParams(SecondSignalParams);
 

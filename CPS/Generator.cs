@@ -9,6 +9,11 @@ namespace CPS
         {
             DEFAULT, SUM, DIFF, MUL, DIV
         }
+        
+        public enum SignalEnum
+        {
+            sin, gauss
+        }
 
         private double Frequency = 1;
         private BaseSignal FirstSignal;
@@ -49,5 +54,17 @@ namespace CPS
             return new DiscreteSignal(Frequency, SignalToBuild);
         }
 
+        public static BaseSignal GetSelectedSignal(SignalWrapper s)
+        {
+            switch (s.Signal)
+            {
+                case SignalEnum.sin:
+                    return new SinusoidalSignal();
+                case SignalEnum.gauss:
+                    return new GaussianNoise();
+                default:
+                    return new SinusoidalSignal();
+            }
+        }
     }
 }
