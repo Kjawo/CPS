@@ -17,7 +17,8 @@ namespace CPS
         private Params SecondSignalParams = new Params();
         private ChartWrapper ChartWrapper = new ChartWrapper();
         private HistogramWrapper HistogramWrapper = new HistogramWrapper();
-        public double Frequency { get; set; } = 100;
+        public double Frequency { get; set; } = 500;
+        public int HistogramGroupsCount { get; set; } = 50;
         public bool SecondSignalEnabled { get; set; } = false;
         public List<ModeWrapper> ModeList { get; } = new List<ModeWrapper>
         {
@@ -48,6 +49,7 @@ namespace CPS
         {
             ChartWrapper.Clear();
             HistogramWrapper.Clear();
+            HistogramWrapper.HistogramGroupsCount = HistogramGroupsCount;
 
             ISignal s1 = new SinusoidalSignal();
             ISignal s2 = new SinusoidalSignal();

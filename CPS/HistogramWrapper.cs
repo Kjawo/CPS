@@ -12,7 +12,7 @@ namespace CPS
         public SeriesCollection SeriesCollection { get; } = new SeriesCollection();
         public Func<double, string> XFormatter { get; } = value => value.ToString();
         public Func<double, string> YFormatter { get; } = value => value.ToString();
-        public int HistogramGroupsCount { get; set; } = 50;
+        public int HistogramGroupsCount { get; set; } = 100;
         double MinSignalAmplitude { get; set; } = -1;
         double MaxSignalAmplitude { get; set; } = 1;
 
@@ -52,7 +52,7 @@ namespace CPS
         {
             double step = (MaxSignalAmplitude - MinSignalAmplitude) / HistogramGroupsCount;
             double group = MinSignalAmplitude;
-            while (group < tuple.Item2) group += step;
+            while (group <= tuple.Item2) group += step;
             return group;
         }
 

@@ -45,7 +45,7 @@
                 </lvc:CartesianChart>
             </TabItem>
         </TabControl>
-        
+
 
         <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Top">
             <Grid.RowDefinitions>
@@ -115,9 +115,27 @@
                 <TextBox Text="{Binding T, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="4" Margin="10,5" Width="50" HorizontalAlignment="Left" IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}"/>
             </Grid>
 
-            <Button Click="Generate" Content="Generuj" Grid.Column="2" Margin="62,29,-57,0" Width="75" HorizontalContentAlignment="Center" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <ComboBox ItemsSource="{Binding ModeList}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMode}" x:Name="SignalMode" Grid.Column="2" HorizontalAlignment="Left" Margin="32,67,-73,0" VerticalAlignment="Top" Width="120"/>
-            <TextBox Text="{Binding Frequency, FallbackValue=100, Mode=TwoWay, StringFormat=\{0:F4\}}" Margin="72,104,-41,26" Width="50" HorizontalAlignment="Left" Grid.Column="2"/>
+            <Grid Margin="0,0,0,10" Grid.Column="2" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Tryb" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <ComboBox ItemsSource="{Binding ModeList}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedMode}" x:Name="SignalMode" Margin="0" VerticalAlignment="Center" Width="120" HorizontalAlignment="Center" Grid.Column="1"/>
+                <Label Content="Próbkowanie (f)" Margin="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBox Text="{Binding Frequency, FallbackValue=100, Mode=TwoWay, StringFormat=\{0:F4\}}" Margin="0" Width="50" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1"/>
+                <Label Content="Liczba grup&#xD;&#xA;histogramu" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2"/>
+                <TextBox Text="{Binding HistogramGroupsCount, FallbackValue=50, Mode=TwoWay, StringFormat=\{0:D\}}" Margin="0" Width="50" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Grid.Column="1"/>
+                <Button Click="Generate" Content="Generuj" Margin="0,5,0,0" Width="75" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2"/>
+            </Grid>
+
 
         </Grid>
 

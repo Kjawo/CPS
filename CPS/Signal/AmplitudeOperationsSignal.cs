@@ -1,4 +1,5 @@
-﻿using static CPS.Generator;
+﻿using System;
+using static CPS.Generator;
 
 namespace CPS.Signal
 {
@@ -7,12 +8,20 @@ namespace CPS.Signal
         private ISignal A;
         private ISignal B;
         private Mode Mode;
+        private Params p = new Params();
 
         public AmplitudeOperationSignal(ISignal A, ISignal B, Mode Mode)
         {
             this.A = A;
             this.B = B;
             this.Mode = Mode;
+            // Set params
+            Params pA = A.Params();
+            Params pB = B.Params();
+            double startTime = Math.Min(pA.t1, pB.t1);
+            double endTime = Math.Max(pA.t1 + pA.d, pB.t1 + pB.d);
+            p.t1 = startTime;
+            p.d = endTime - startTime;
         }
 
         public string Name()
@@ -51,7 +60,7 @@ namespace CPS.Signal
 
         public Params Params()
         {
-            return new Params();
+            return p;
         }
 
         public void SetParams(Params Params)
