@@ -26,7 +26,7 @@ namespace CPS
         private Params SecondSignalParams = new Params();
         private ChartWrapper ChartWrapper = new ChartWrapper();
         private HistogramWrapper HistogramWrapper = new HistogramWrapper();
-        public double Frequency { get; set; } = 500;
+        public double Frequency { get; set; } = 16;
         public int HistogramGroupsCount { get; set; } = 50;
         public bool SecondSignalEnabled { get; set; } = false;
         public List<ModeWrapper> ModeList { get; } = new List<ModeWrapper>
@@ -49,6 +49,7 @@ namespace CPS
             new SignalWrapper() { Name = "Sygnał prostokątny symetryczny", Signal = SignalEnum.squareWaveSymetrical },
             new SignalWrapper() { Name = "Sygnał trójkątny", Signal = SignalEnum.triangleWave },
             new SignalWrapper() { Name = "Skok jednostkowy", Signal = SignalEnum.unitStep },
+            new SignalWrapper() { Name = "Impuls jednostkowy", Signal = SignalEnum.unitImpulse },
         };
         public ModeWrapper SelectedMode { get; set; }
         public SignalWrapper SelectedSignalSecond { get; set; }

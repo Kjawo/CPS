@@ -84,6 +84,7 @@
     <Compile Include="Signal\Signals\SquareWaveSymetricalSignal.cs" />
     <Compile Include="Signal\Signals\TriangleWave.cs" />
     <Compile Include="Signal\Signals\UniformDistributionNoise.cs" />
+    <Compile Include="Signal\Signals\UnitImpulse.cs" />
     <Compile Include="Signal\Signals\UnitStep.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -13,7 +13,7 @@ namespace CPS
         public enum SignalEnum
         {
             sin, gauss, uniformD, sinHalfRectified, sinFullRectified, squareWave, squareWaveSymetrical, triangleWave, 
-            unitStep
+            unitStep, unitImpulse
         }
 
         private double Frequency = 1;
@@ -77,6 +77,8 @@ namespace CPS
                     return new TriangleWave();
                 case SignalEnum.unitStep:
                     return new UnitStep();
+                case SignalEnum.unitImpulse:
+                    return new UnitImpulse();
                 default:
                     return new SinusoidalSignal();
 
