@@ -81,6 +81,7 @@
     <Compile Include="Signal\Signals\GaussianNoise.cs" />
     <Compile Include="Signal\Signals\SinusoidalSignal.cs" />
     <Compile Include="Signal\Signals\SquareWaveSignal.cs" />
+    <Compile Include="Signal\Signals\SquareWaveSymetricalSignal.cs" />
     <Compile Include="Signal\Signals\UniformDistributionNoise.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -12,7 +12,7 @@ namespace CPS
         
         public enum SignalEnum
         {
-            sin, gauss, uniformD, sinHalfRectified, sinFullRectified, squareWave
+            sin, gauss, uniformD, sinHalfRectified, sinFullRectified, squareWave, squareWaveSymetrical
         }
 
         private double Frequency = 1;
@@ -70,6 +70,8 @@ namespace CPS
                     return new SineWaveFullRectified();
                 case SignalEnum.squareWave:
                     return new SquareWaveSignal();
+                case SignalEnum.squareWaveSymetrical:
+                    return  new SquareWaveSymetricalSignal();
                 default:
                     return new SinusoidalSignal();
 
