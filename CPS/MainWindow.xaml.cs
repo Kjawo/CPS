@@ -20,6 +20,8 @@ namespace CPS
 
     public partial class MainWindow : Window
     {
+        public static Random Random = new Random();
+        
         private Params FirstSignalParams = new Params();
         private Params SecondSignalParams = new Params();
         private ChartWrapper ChartWrapper = new ChartWrapper();
@@ -56,6 +58,8 @@ namespace CPS
             SecondSignalParamGrid.DataContext = SecondSignalParams;
             SecondSignalParams.T = 0.2;
             SelectedMode = ModeList[0];
+            
+            
             
             SelectedSignalFirst = SignalList[1];
             SelectedSignalSecond = SignalList[0];

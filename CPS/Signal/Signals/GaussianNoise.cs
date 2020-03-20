@@ -4,8 +4,6 @@ namespace CPS.Signal
 {
     public class GaussianNoise : BaseSignal
     {
-        public Random Random = new Random();
-
         private Params p = new Params();
 
         public GaussianNoise()
@@ -26,8 +24,8 @@ namespace CPS.Signal
         protected override double yValueInRange(double x)
         {
             double stdDev = p.A / 3;
-            double u1 = 1.0 - Random.NextDouble();
-            double u2 = 1.0 - Random.NextDouble();
+            double u1 = 1.0 - MainWindow.Random.NextDouble();
+            double u2 = 1.0 - MainWindow.Random.NextDouble();
             double normal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
 
             return normal * stdDev;
