@@ -50,6 +50,7 @@ namespace CPS
             new SignalWrapper() { Name = "Sygnał trójkątny", Signal = SignalEnum.triangleWave },
             new SignalWrapper() { Name = "Skok jednostkowy", Signal = SignalEnum.unitStep },
             new SignalWrapper() { Name = "Impuls jednostkowy", Signal = SignalEnum.unitImpulse },
+            new SignalWrapper() { Name = "Szum impulsowy", Signal = SignalEnum.impulseNoise },
         };
         public ModeWrapper SelectedMode { get; set; }
         public SignalWrapper SelectedSignalSecond { get; set; }
