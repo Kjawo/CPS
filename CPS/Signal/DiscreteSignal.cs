@@ -9,11 +9,11 @@ namespace CPS.Signal
     public class DiscreteSignal
     {
         public string Name { get => InputSignal.Name(); }
-        private ISignal InputSignal;
+        private BaseSignal InputSignal;
         private double Frequency;
         private List<Tuple<double, double>> Values = new List<Tuple<double, double>>();
 
-        public DiscreteSignal(double f, ISignal signal)
+        public DiscreteSignal(double f, BaseSignal signal)
         {
             InputSignal = signal;
             Frequency = f;

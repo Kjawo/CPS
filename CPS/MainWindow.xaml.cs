@@ -51,8 +51,8 @@ namespace CPS
             HistogramWrapper.Clear();
             HistogramWrapper.HistogramGroupsCount = HistogramGroupsCount;
 
-            ISignal s1 = new SinusoidalSignal();
-            ISignal s2 = new SinusoidalSignal();
+            BaseSignal s1 = new SinusoidalSignal();
+            BaseSignal s2 = new SinusoidalSignal();
             s1.SetParams(FirstSignalParams);
             s2.SetParams(SecondSignalParams);
 

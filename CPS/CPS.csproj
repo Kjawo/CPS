@@ -74,7 +74,7 @@
     <Compile Include="HistogramWrapper.cs" />
     <Compile Include="Signal\AmplitudeOperationsSignal.cs" />
     <Compile Include="Signal\DiscreteSignal.cs" />
-    <Compile Include="Signal\ISignal.cs" />
+    <Compile Include="Signal\BaseSignal.cs" />
     <Compile Include="Signal\Params.cs" />
     <Compile Include="Signal\SinusoidalSignal.cs" />
     <Page Include="MainWindow.xaml">

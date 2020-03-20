@@ -11,8 +11,8 @@ namespace CPS
         }
 
         private double Frequency = 1;
-        private ISignal FirstSignal;
-        private ISignal SecondSignal;
+        private BaseSignal FirstSignal;
+        private BaseSignal SecondSignal;
         private Mode OutputMode;
 
         public Generator withFrequency(double f)
@@ -21,13 +21,13 @@ namespace CPS
             return this;
         }
 
-        public Generator withSignal(ISignal signal)
+        public Generator withSignal(BaseSignal signal)
         {
             FirstSignal = signal;
             return this;
         }
 
-        public Generator withSecondarySignal(ISignal signal)
+        public Generator withSecondarySignal(BaseSignal signal)
         {
             SecondSignal = signal;
             return this;
@@ -41,7 +41,7 @@ namespace CPS
 
         public DiscreteSignal build()
         {
-            ISignal SignalToBuild = FirstSignal;
+            BaseSignal SignalToBuild = FirstSignal;
             if (OutputMode != Mode.DEFAULT)
             {
                 SignalToBuild = new AmplitudeOperationSignal(FirstSignal, SecondSignal, OutputMode);

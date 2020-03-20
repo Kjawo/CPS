@@ -2,7 +2,7 @@
 
 namespace CPS.Signal
 {
-    class SinusoidalSignal : ISignal
+    class SinusoidalSignal : BaseSignal
     {
         private Params p = new Params();
 
@@ -14,22 +14,22 @@ namespace CPS.Signal
             p.t1 = 0;
         }
 
-        public string Name()
+        override public string Name()
         {
             return "sin";
         }
 
-        public double y(double x)
+        override protected double yValueInRange(double x)
         {
             return p.A * Math.Sin(2 * Math.PI / p.T * (x - p.t1));
         }
 
-        public Params Params()
+        override public Params Params()
         {
             return p;
         }
 
-        public void SetParams(Params Params)
+        override public void SetParams(Params Params)
         {
             p = Params;
         }

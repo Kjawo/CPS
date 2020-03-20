@@ -3,14 +3,14 @@ using static CPS.Generator;
 
 namespace CPS.Signal
 {
-    class AmplitudeOperationSignal : ISignal
+    class AmplitudeOperationSignal : BaseSignal
     {
-        private ISignal A;
-        private ISignal B;
+        private BaseSignal A;
+        private BaseSignal B;
         private Mode Mode;
         private Params p = new Params();
 
-        public AmplitudeOperationSignal(ISignal A, ISignal B, Mode Mode)
+        public AmplitudeOperationSignal(BaseSignal A, BaseSignal B, Mode Mode)
         {
             this.A = A;
             this.B = B;
@@ -24,7 +24,7 @@ namespace CPS.Signal
             p.d = endTime - startTime;
         }
 
-        public string Name()
+        override public string Name()
         {
             switch (Mode)
             {
@@ -41,7 +41,7 @@ namespace CPS.Signal
             }
         }
 
-        public double y(double x)
+        override protected double yValueInRange(double x)
         {
             switch (Mode)
             {
@@ -58,12 +58,12 @@ namespace CPS.Signal
             }
         }
 
-        public Params Params()
+        override public Params Params()
         {
             return p;
         }
 
-        public void SetParams(Params Params)
+        override public void SetParams(Params Params)
         {
         }
 
