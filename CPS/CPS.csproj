@@ -76,6 +76,7 @@
     <Compile Include="Signal\DiscreteSignal.cs" />
     <Compile Include="Signal\BaseSignal.cs" />
     <Compile Include="Signal\Params.cs" />
+    <Compile Include="Signal\Signals\SineWaveFullRectified.cs" />
     <Compile Include="Signal\Signals\SineWaveHalfRectified.cs" />
     <Compile Include="Signal\Signals\GaussianNoise.cs" />
     <Compile Include="Signal\Signals\SinusoidalSignal.cs" />
