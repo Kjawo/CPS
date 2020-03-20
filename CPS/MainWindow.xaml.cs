@@ -47,6 +47,7 @@ namespace CPS
             new SignalWrapper() { Name = "Sygnał sinusoidalny \nwyprostowany dwupołówkowo", Signal = SignalEnum.sinFullRectified },
             new SignalWrapper() { Name = "Sygnał prostokątny", Signal = SignalEnum.squareWave },
             new SignalWrapper() { Name = "Sygnał prostokątny symetryczny", Signal = SignalEnum.squareWaveSymetrical },
+            new SignalWrapper() { Name = "Sygnał trójkątny", Signal = SignalEnum.triangleWave },
         };
         public ModeWrapper SelectedMode { get; set; }
         public SignalWrapper SelectedSignalSecond { get; set; }
