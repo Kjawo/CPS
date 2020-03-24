@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 namespace CPS.Signal
 {
     [Serializable]
-    public abstract class BaseSignal
+    public abstract class BaseSignal : ICloneable
     {
         public abstract string Name();
 
@@ -22,5 +22,10 @@ namespace CPS.Signal
         }
 
         protected abstract double yValueInRange(double x);
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
+        }
     }
 }

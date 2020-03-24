@@ -9,15 +9,30 @@ namespace CPS.Signal
     [Serializable]
     public class DiscreteSignal
     {
-        public string Name { get => InputSignal.Name(); }
+        public string Name { get; private set; }
         private BaseSignal InputSignal;
-        private double Frequency;
+        public double Frequency { get; private set; }
         private List<Tuple<double, double>> Values = new List<Tuple<double, double>>();
+
+        public static DiscreteSignal ForParameters(string Name, double Frequency,
+            List<Tuple<double, double>> Values)
+        {
+            DiscreteSignal Signal = new DiscreteSignal();
+            Signal.Frequency = Frequency;
+            Signal.Values = Values;
+            Signal.Name = Name;
+            return Signal;
+        }
+
+        private DiscreteSignal()
+        {
+        }
 
         public DiscreteSignal(double f, BaseSignal signal)
         {
             InputSignal = signal;
             Frequency = f;
+            Name = signal.Name();
             BuildValues();
         }
 

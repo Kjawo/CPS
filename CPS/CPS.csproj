@@ -70,12 +70,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Generator.cs" />
     <Compile Include="HistogramWrapper.cs" />
     <Compile Include="Serializer.cs" />
-    <Compile Include="Signal\AmplitudeOperationsSignal.cs" />
+    <Compile Include="Signal\Operations\DiffSignalOperation.cs" />
+    <Compile Include="Signal\Operations\DivSignalOperation.cs" />
+    <Compile Include="Signal\Operations\MulSignalOperation.cs" />
+    <Compile Include="Signal\Operations\SignalOperation.cs" />
     <Compile Include="Signal\DiscreteSignal.cs" />
     <Compile Include="Signal\BaseSignal.cs" />
+    <Compile Include="Signal\Operations\SumSignalOperation.cs" />
     <Compile Include="Signal\Params.cs" />
     <Compile Include="Signal\Signals\ImpulseNoise.cs" />
     <Compile Include="Signal\Signals\SineWaveFullRectified.cs" />

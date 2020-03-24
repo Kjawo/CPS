@@ -1,28 +1,23 @@
 ﻿using System;
-using System.Collections;
 using CPS.Signal;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Ports;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
 using System.Windows.Controls;
-using static CPS.Generator;
+using CPS.Signal.Operations;
 
 namespace CPS
 {
     [Serializable]
-    public class ModeWrapper
+    public class OperationWrapper
     {
         public string Name { get; set; }
-        public Mode Mode { get; set; }
+        public SignalOperation Operation { get; set; }
     }
     [Serializable]
     public class SignalWrapper
     {
         public string Name { get; set; }
-        public SignalEnum Signal { get; set; }
+        public BaseSignal Signal { get; set; }
     }
 
     public partial class MainWindow : Window
@@ -33,169 +28,135 @@ namespace CPS
         private Params SecondSignalParams = new Params();
         private ChartWrapper ChartWrapper = new ChartWrapper();
         private HistogramWrapper HistogramWrapper = new HistogramWrapper();
-        private DiscreteSignal ds1;
-        private DiscreteSignal ds2;
-        public double Frequency { get; set; } = 16;
-        public int HistogramGroupsCount { get; set; } = 50;
+        private DiscreteSignal Signal1;
+        private DiscreteSignal Signal2;
+        public double Frequency { get; set; } = 500;
         public bool SecondSignalEnabled { get; set; } = false;
 
-        public List<ModeWrapper> ModeList { get; } = new List<ModeWrapper>
+        public List<OperationWrapper> OperationsList { get; } = new List<OperationWrapper>
         {
-            new ModeWrapper {Name = "Domyślny", Mode = Mode.DEFAULT},
-            new ModeWrapper {Name = "Suma", Mode = Mode.SUM},
-            new ModeWrapper {Name = "Różnica", Mode = Mode.DIFF},
-            new ModeWrapper {Name = "Iloczyn", Mode = Mode.MUL},
-            new ModeWrapper {Name = "Iloraz", Mode = Mode.DIV},
+            new OperationWrapper {Name = "Suma", Operation = new SumSignalOperation()},
+            new OperationWrapper {Name = "Różnica", Operation = new DiffSignalOperation()},
+            new OperationWrapper {Name = "Iloczyn", Operation = new MulSignalOperation()},
+            new OperationWrapper {Name = "Iloraz", Operation = new DivSignalOperation()},
         };
 
         public List<SignalWrapper> SignalList { get; } = new List<SignalWrapper>
         {
-            new SignalWrapper() {Name = "Sygnał sinusoidalny", Signal = SignalEnum.sin},
-            new SignalWrapper() {Name = "Szum gaussowski", Signal = SignalEnum.gauss},
-            new SignalWrapper() {Name = "Szum o rozkładzie jednostajnym", Signal = SignalEnum.uniformD},
+            new SignalWrapper() {Name = "Sygnał sinusoidalny", Signal = new SinusoidalSignal()},
+            new SignalWrapper() {Name = "Szum gaussowski", Signal = new GaussianNoise()},
+            new SignalWrapper() {Name = "Szum o rozkładzie jednostajnym", Signal = new UniformDistributionNoise()},
             new SignalWrapper()
-                {Name = "Sygnał sinusoidalny \nwyprostowany jednopołówkowo", Signal = SignalEnum.sinHalfRectified},
+                {Name = "Sygnał sinusoidalny \nwyprostowany jednopołówkowo", Signal = new SineWaveHalfRectified()},
             new SignalWrapper()
-                {Name = "Sygnał sinusoidalny \nwyprostowany dwupołówkowo", Signal = SignalEnum.sinFullRectified},
-            new SignalWrapper() {Name = "Sygnał prostokątny", Signal = SignalEnum.squareWave},
-            new SignalWrapper() {Name = "Sygnał prostokątny symetryczny", Signal = SignalEnum.squareWaveSymetrical},
-            new SignalWrapper() {Name = "Sygnał trójkątny", Signal = SignalEnum.triangleWave},
-            new SignalWrapper() {Name = "Skok jednostkowy", Signal = SignalEnum.unitStep},
-            new SignalWrapper() {Name = "Impuls jednostkowy", Signal = SignalEnum.unitImpulse},
-            new SignalWrapper() {Name = "Szum impulsowy", Signal = SignalEnum.impulseNoise},
+                {Name = "Sygnał sinusoidalny \nwyprostowany dwupołówkowo", Signal = new SineWaveFullRectified()},
+            new SignalWrapper() {Name = "Sygnał prostokątny", Signal = new SquareWaveSignal()},
+            new SignalWrapper() {Name = "Sygnał prostokątny symetryczny", Signal = new SquareWaveSymetricalSignal()},
+            new SignalWrapper() {Name = "Sygnał trójkątny", Signal = new TriangleWave()},
+            new SignalWrapper() {Name = "Skok jednostkowy", Signal = new UnitStep()},
+            new SignalWrapper() {Name = "Impuls jednostkowy", Signal = new UnitImpulse()},
+            new SignalWrapper() {Name = "Szum impulsowy", Signal = new ImpulseNoise()},
         };
 
-        public ModeWrapper SelectedMode { get; set; }
+        public OperationWrapper SelectedOperation { get; set; }
         public SignalWrapper SelectedSignalSecond { get; set; }
         public SignalWrapper SelectedSignalFirst { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
+            DataContext = this;
             Chart.DataContext = ChartWrapper;
             Histogram.DataContext = HistogramWrapper;
+            HistogramGroupCount.DataContext = HistogramWrapper;
             SecondSignalEnabler.DataContext = this;
             FirstSignalParamGrid.DataContext = FirstSignalParams;
             SecondSignalParamGrid.DataContext = SecondSignalParams;
             SecondSignalParams.T = 0.2;
-            SelectedMode = ModeList[0];
-
-
-            SelectedSignalFirst = SignalList[1];
-            SelectedSignalSecond = SignalList[0];
-
-            GenerateFromParameters(null, null);
+            SelectedOperation = OperationsList[0];
+            SelectedSignalFirst = SignalList[0];
+            SelectedSignalSecond = SignalList[1];
+            Generate(null, null);
         }
 
-        public void SaveFirst(object sender, RoutedEventArgs e)
+        private void Generate(object sender, RoutedEventArgs e)
         {
-            string path = Serializer.FilePath(false);
-
-            BinaryWrapper binaryWrapper = new BinaryWrapper();
-            binaryWrapper.SelectedSignal = SelectedSignalFirst;
-            binaryWrapper.SignalParams = FirstSignalParams;
-            binaryWrapper.DiscreteSignal = ds1;
-
-            Serializer.SaveToBinaryFile(binaryWrapper, path);
-        }
-
-        public void LoadFirst(object sender, RoutedEventArgs e)
-        {
-            string path = Serializer.FilePath(true);
-            
-            BinaryWrapper binaryWrapper = new BinaryWrapper();
-            binaryWrapper = Serializer.ReadFromBinaryFile(path);
-
-            FirstSignalParams = binaryWrapper.SignalParams;
-            SelectedSignalFirst = binaryWrapper.SelectedSignal;
-            ds1 = binaryWrapper.DiscreteSignal;
-
-            FirstSignalParamGrid.DataContext = FirstSignalParams;
-            FirstSignalParamGrid.DataContext = SelectedSignalFirst;
-        }
-
-        public void SaveSecond(object sender, RoutedEventArgs e)
-        {
-            string path = Serializer.FilePath(false);
-
-            BinaryWrapper binaryWrapper = new BinaryWrapper();
-            binaryWrapper.SelectedSignal = SelectedSignalFirst;
-            binaryWrapper.SignalParams = FirstSignalParams;
-            binaryWrapper.DiscreteSignal = ds2;
-
-
-            Serializer.SaveToBinaryFile(binaryWrapper, path);
-        }
-
-        public void LoadSecond(object sender, RoutedEventArgs e)
-        {
-            string path = Serializer.FilePath(true);
-            
-            BinaryWrapper binaryWrapper = new BinaryWrapper();
-            binaryWrapper = Serializer.ReadFromBinaryFile(path);
-
-            SecondSignalParams = binaryWrapper.SignalParams;
-            SelectedSignalSecond = binaryWrapper.SelectedSignal;
-            ds2 = binaryWrapper.DiscreteSignal;
-
-            SecondSignalParamGrid.DataContext = SecondSignalParams;
-            SecondSignalParamGrid.DataContext = SelectedSignalSecond;
-        }
-
-        public void GenerateFromParameters(object sender, RoutedEventArgs e)
-        {
-            ChartWrapper.Clear();
-            HistogramWrapper.Clear();
-            HistogramWrapper.HistogramGroupsCount = HistogramGroupsCount;
-
-            BaseSignal s1 = GetSelectedSignal(SelectedSignalFirst);
-            BaseSignal s2 = GetSelectedSignal(SelectedSignalSecond);
+            BaseSignal s1 = (BaseSignal) SelectedSignalFirst.Signal.Clone();
+            BaseSignal s2 = (BaseSignal) SelectedSignalSecond.Signal.Clone(); 
             s1.SetParams(FirstSignalParams);
             s2.SetParams(SecondSignalParams);
 
-            ds1 = new Generator()
-                .withFrequency(Frequency)
-                .withSignal(s1)
-                .withSecondarySignal(s2)
-                .withMode(SelectedMode.Mode)
-                .build();
-            ChartWrapper.AddSeries(ds1);
-            HistogramWrapper.AddSeries(ds1);
+            Signal1 = new DiscreteSignal(Frequency, s1);
+            Signal2 = new DiscreteSignal(Frequency, s2);
 
-            if (SecondSignalEnabled && SelectedMode.Mode == Mode.DEFAULT)
+            RebuildChart(null, null);
+            RebuildHistogram(null, null);
+        }
+
+        private void Operation(object sender, RoutedEventArgs e)
+        {
+            if (Signal2 != null)
             {
-                ds2 = new Generator()
-                    .withFrequency(Frequency)
-                    .withSignal(s2)
-                    .withMode(SelectedMode.Mode)
-                    .build();
-                ChartWrapper.AddSeries(ds2);
-                HistogramWrapper.AddSeries(ds2);
+                Signal1 = SelectedOperation.Operation.Process(Signal1, Signal2);
+                RebuildChart(null, null);
+                RebuildHistogram(null, null);
+                SecondSignalEnabler.IsChecked = false;
             }
         }
-        
-        public void GenerateFromDiscrete(object sender, RoutedEventArgs e)
+
+        private void RebuildChart(object sender, RoutedEventArgs e)
         {
             ChartWrapper.Clear();
-            HistogramWrapper.Clear();
-            HistogramWrapper.HistogramGroupsCount = HistogramGroupsCount;
-
-            ChartWrapper.AddSeries(ds1);
-            HistogramWrapper.AddSeries(ds1);
-
-            if (SecondSignalEnabled && SelectedMode.Mode == Mode.DEFAULT && ds2 != null)
-            {
-                BaseSignal s2 = GetSelectedSignal(SelectedSignalSecond);
-                s2.SetParams(SecondSignalParams);
-                ds2 = new Generator()
-                    .withFrequency(Frequency)
-                    .withSignal(s2)
-                    .withMode(SelectedMode.Mode)
-                    .build();
-                ChartWrapper.AddSeries(ds2);
-                HistogramWrapper.AddSeries(ds2);
-            }
+            ChartWrapper.AddSeries(Signal1);
+            if (SecondSignalEnabled)
+                ChartWrapper.AddSeries(Signal2);
         }
+        private void RebuildHistogram(object sender, RoutedEventArgs e)
+        {
+            HistogramWrapper.Clear();
+            HistogramWrapper.AddSeries(Signal1);
+            if (SecondSignalEnabled)
+                HistogramWrapper.AddSeries(Signal2);
+        }
+
+        private void SaveSignal(object sender, RoutedEventArgs e)
+        {
+            string source = ((Button)sender).Name;
+            string path = Serializer.FilePath(false);
+            BinaryWrapper binaryWrapper = new BinaryWrapper();
+            if (source == "SaveFirstSignalButton")
+            {
+                binaryWrapper.SelectedSignal = SelectedSignalFirst;
+                binaryWrapper.SignalParams = FirstSignalParams;
+                binaryWrapper.DiscreteSignal = Signal1;
+            }
+            else if (source == "SaveSecondSignalButton")
+            {
+                binaryWrapper.SelectedSignal = SelectedSignalSecond;
+                binaryWrapper.SignalParams = SecondSignalParams;
+                binaryWrapper.DiscreteSignal = Signal2;
+            }
+            Serializer.SaveToBinaryFile(binaryWrapper, path);
+        }
+
+        private void LoadSignal(object sender, RoutedEventArgs e)
+        {
+            string source = ((Button)sender).Name;
+            string path = Serializer.FilePath(true);
+            BinaryWrapper binaryWrapper = new BinaryWrapper();
+            binaryWrapper = Serializer.ReadFromBinaryFile(path);
+            if (source == "LoadFirstSignalButton")
+            {
+                Signal1 = binaryWrapper.DiscreteSignal;
+            }
+            else if (source == "LoadSecondSignalButton")
+            {
+                Signal2 = binaryWrapper.DiscreteSignal;
+                SecondSignalEnabler.IsChecked = true;
+            }
+            RebuildChart(null, null);
+            RebuildHistogram(null, null);
+        }
+
     }
 }
