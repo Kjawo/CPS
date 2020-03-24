@@ -4,8 +4,10 @@ using CPS.Signal;
 
 namespace CPS.Signal
 {
+    [Serializable]
     public class UnitStep : BaseSignal
     {
+        
         private Params p = new Params();
 
         public UnitStep()

@@ -4,6 +4,7 @@ using CPS.Signal;
 
 namespace CPS.Signal
 {
+    [Serializable]
     public class SquareWaveSymetricalSignal : BaseSignal
     {
         private Params p = new Params();

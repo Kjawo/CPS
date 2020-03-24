@@ -190,6 +190,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -202,7 +203,8 @@
                 <TextBox Text="{Binding Frequency, FallbackValue=100, Mode=TwoWay, StringFormat=\{0:F4\}}" Margin="0" Width="50" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1"/>
                 <Label Content="Liczba grup&#xD;&#xA;histogramu" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2"/>
                 <TextBox Text="{Binding HistogramGroupsCount, FallbackValue=50, Mode=TwoWay, StringFormat=\{0:D\}}" Margin="0" Width="50" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Grid.Column="1"/>
-                <Button Click="Generate" Content="Generuj" Margin="0,5,0,0" Width="75" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2"/>
+                <Button Click="GenerateFromParameters" Content="Generuj sygnał z parametrów" Margin="0,5,0,0" Width="auto" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2"/>
+                <Button Click="GenerateFromDiscrete" Content="Generuj wczytany sygnał" Margin="0,5,0,0" Width="auto" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2"/>
             </Grid>
 
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CPS.Signal
 {
+    [Serializable]
     public class DiscreteSignal
     {
         public string Name { get => InputSignal.Name(); }

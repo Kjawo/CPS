@@ -2,6 +2,7 @@
 
 namespace CPS.Signal
 {
+    [Serializable]
     public class GaussianNoise : BaseSignal
     {
         private Params p = new Params();

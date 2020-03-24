@@ -33,6 +33,8 @@ namespace CPS
         private Params SecondSignalParams = new Params();
         private ChartWrapper ChartWrapper = new ChartWrapper();
         private HistogramWrapper HistogramWrapper = new HistogramWrapper();
+        private DiscreteSignal ds1;
+        private DiscreteSignal ds2;
         public double Frequency { get; set; } = 16;
         public int HistogramGroupsCount { get; set; } = 50;
         public bool SecondSignalEnabled { get; set; } = false;
@@ -83,7 +85,7 @@ namespace CPS
             SelectedSignalFirst = SignalList[1];
             SelectedSignalSecond = SignalList[0];
 
-            Generate(null, null);
+            GenerateFromParameters(null, null);
         }
 
         public void SaveFirst(object sender, RoutedEventArgs e)
@@ -93,6 +95,7 @@ namespace CPS
             BinaryWrapper binaryWrapper = new BinaryWrapper();
             binaryWrapper.SelectedSignal = SelectedSignalFirst;
             binaryWrapper.SignalParams = FirstSignalParams;
+            binaryWrapper.DiscreteSignal = ds1;
 
             Serializer.SaveToBinaryFile(binaryWrapper, path);
         }
@@ -106,6 +109,7 @@ namespace CPS
 
             FirstSignalParams = binaryWrapper.SignalParams;
             SelectedSignalFirst = binaryWrapper.SelectedSignal;
+            ds1 = binaryWrapper.DiscreteSignal;
 
             FirstSignalParamGrid.DataContext = FirstSignalParams;
             FirstSignalParamGrid.DataContext = SelectedSignalFirst;
@@ -118,6 +122,8 @@ namespace CPS
             BinaryWrapper binaryWrapper = new BinaryWrapper();
             binaryWrapper.SelectedSignal = SelectedSignalFirst;
             binaryWrapper.SignalParams = FirstSignalParams;
+            binaryWrapper.DiscreteSignal = ds2;
+
 
             Serializer.SaveToBinaryFile(binaryWrapper, path);
         }
@@ -131,12 +137,13 @@ namespace CPS
 
             SecondSignalParams = binaryWrapper.SignalParams;
             SelectedSignalSecond = binaryWrapper.SelectedSignal;
+            ds2 = binaryWrapper.DiscreteSignal;
 
             SecondSignalParamGrid.DataContext = SecondSignalParams;
             SecondSignalParamGrid.DataContext = SelectedSignalSecond;
         }
 
-        public void Generate(object sender, RoutedEventArgs e)
+        public void GenerateFromParameters(object sender, RoutedEventArgs e)
         {
             ChartWrapper.Clear();
             HistogramWrapper.Clear();
@@ -147,7 +154,7 @@ namespace CPS
             s1.SetParams(FirstSignalParams);
             s2.SetParams(SecondSignalParams);
 
-            DiscreteSignal ds1 = new Generator()
+            ds1 = new Generator()
                 .withFrequency(Frequency)
                 .withSignal(s1)
                 .withSecondarySignal(s2)
@@ -158,7 +165,30 @@ namespace CPS
 
             if (SecondSignalEnabled && SelectedMode.Mode == Mode.DEFAULT)
             {
-                DiscreteSignal ds2 = new Generator()
+                ds2 = new Generator()
+                    .withFrequency(Frequency)
+                    .withSignal(s2)
+                    .withMode(SelectedMode.Mode)
+                    .build();
+                ChartWrapper.AddSeries(ds2);
+                HistogramWrapper.AddSeries(ds2);
+            }
+        }
+        
+        public void GenerateFromDiscrete(object sender, RoutedEventArgs e)
+        {
+            ChartWrapper.Clear();
+            HistogramWrapper.Clear();
+            HistogramWrapper.HistogramGroupsCount = HistogramGroupsCount;
+
+            ChartWrapper.AddSeries(ds1);
+            HistogramWrapper.AddSeries(ds1);
+
+            if (SecondSignalEnabled && SelectedMode.Mode == Mode.DEFAULT && ds2 != null)
+            {
+                BaseSignal s2 = GetSelectedSignal(SelectedSignalSecond);
+                s2.SetParams(SecondSignalParams);
+                ds2 = new Generator()
                     .withFrequency(Frequency)
                     .withSignal(s2)
                     .withMode(SelectedMode.Mode)

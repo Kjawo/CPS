@@ -77,5 +77,6 @@ namespace CPS
     {
         public Params SignalParams { get; set; }
         public SignalWrapper SelectedSignal { get; set; }
+        public DiscreteSignal DiscreteSignal { get; set; }
     }
 }

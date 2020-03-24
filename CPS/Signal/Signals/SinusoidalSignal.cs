@@ -2,6 +2,7 @@
 
 namespace CPS.Signal
 {
+    [Serializable]
     class SinusoidalSignal : BaseSignal
     {
         private Params p = new Params();

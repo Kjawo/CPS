@@ -2,6 +2,7 @@
 
 namespace CPS.Signal
 {
+    [Serializable]
     public class SineWaveHalfRectified : BaseSignal
     {
         private Params p = new Params();
