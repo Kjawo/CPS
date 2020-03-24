@@ -1,4 +1,6 @@
-﻿namespace CPS.Signal
+﻿using System.Runtime.Serialization;
+
+namespace CPS.Signal
 {
     public abstract class BaseSignal
     {

@@ -1,5 +1,8 @@
-﻿namespace CPS.Signal
+﻿using System;
+
+namespace CPS.Signal
 {
+    [Serializable]
     public class Params
     {
         public double A { get; set; } = 1;

@@ -72,6 +72,7 @@
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -102,26 +103,43 @@
                 
                 <Label Content="Prawdopodobieństwo (p)" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Right"/>
                 <TextBox Text="{Binding p, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="9" Margin="10,5" Width="50" HorizontalAlignment="Left"/>
+                
             </Grid>
             
             <Grid x:Name="SelectSignalFirst" Margin="30,0,30,10" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Label Content="Sygnał pierwszy" Grid.Column="0" Grid.Row="0" Margin="0" HorizontalAlignment="Center"/>
                 <ComboBox ItemsSource="{Binding SignalList}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSignalFirst}" x:Name="SignalFirst"
-                          Margin="0" VerticalAlignment="Center" Width="auto" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1"/>                
+                          Margin="0" VerticalAlignment="Center" Width="auto" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1"/>              
+                
+                <Button Click="SaveFirst" Content="Save" Margin="0,5,0,0" Width="75" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
+                <Button Click="LoadFirst" Content="Load" Margin="0,5,0,0" Width="75" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
             </Grid>
             
             <Grid x:Name="SelectSignalSecond" Margin="30,0,30,10" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Label Content="Sygnał drugi" Grid.Column="0" Grid.Row="0" Margin="0" HorizontalAlignment="Center"/>
                 <ComboBox ItemsSource="{Binding SignalList}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSignalSecond}" x:Name="SignalSecond"
                           Margin="0" VerticalAlignment="Center" Width="auto" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1"/>                
+                
+                <Button Click="SaveSecond" Content="Save" Margin="0,5,0,0" Width="75" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"/>
+                <Button Click="LoadSecond" Content="Load" Margin="0,5,0,0" Width="75" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"/>
             </Grid>
 
             <Grid x:Name="SecondSignalParamGrid" Margin="30,0,30,10" Grid.Column="1" HorizontalAlignment="Left">
