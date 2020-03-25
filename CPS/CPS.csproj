@@ -71,6 +71,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="HistogramWrapper.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Serializer.cs" />
     <Compile Include="Signal\Operations\DiffSignalOperation.cs" />
     <Compile Include="Signal\Operations\DivSignalOperation.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Signal\Signals\UniformDistributionNoise.cs" />
     <Compile Include="Signal\Signals\UnitImpulse.cs" />
     <Compile Include="Signal\Signals\UnitStep.cs" />
+    <Compile Include="Signal\Stats.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

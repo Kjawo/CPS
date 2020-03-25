@@ -1,8 +1,11 @@
 ﻿using System;
 using CPS.Signal;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using CPS.Annotations;
 using CPS.Signal.Operations;
 
 namespace CPS
@@ -20,7 +23,7 @@ namespace CPS
         public BaseSignal Signal { get; set; }
     }
 
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public static Random Random = new Random();
 
@@ -79,6 +82,72 @@ namespace CPS
             Generate(null, null);
         }
 
+        public void CalculateSignalsStats()
+        {
+            List<double> samples = new List<double>();
+            foreach (var value in Signal1.GetValues())
+            {
+                samples.Add(value.Item2);
+            }
+
+            double t1 = FirstSignalParams.t1;
+            double t2 = t1 + FirstSignalParams.d;
+
+            bool isDiscrete = false;
+            AverageValue1 = Stats.AverageValue(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+            AverageAbsValue1 = Stats.AbsAverageValue(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+            RootMeanSquare1 = Stats.RootMeanSquare(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+            Variance1 = Stats.Variance(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+            AveragePower1 = Stats.AveragePower(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+            
+            OnPropertyChanged(nameof(AverageValue1));
+            OnPropertyChanged(nameof(AverageAbsValue1));
+            OnPropertyChanged(nameof(RootMeanSquare1));
+            OnPropertyChanged(nameof(Variance1));
+            OnPropertyChanged(nameof(AveragePower1));
+            
+            if (SecondSignalEnabler.IsChecked == true)
+            {
+                List<double> samples2 = new List<double>();
+                foreach (var value in Signal2.GetValues())
+                {
+                    samples2.Add(value.Item2);
+                }
+            
+                t1 = SecondSignalParams.t1;
+                t2 = t1 + SecondSignalParams.d;
+                
+                AverageValue2 = Stats.AverageValue(samples2, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+                AverageAbsValue2 = Stats.AbsAverageValue(samples2, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+                RootMeanSquare2 = Stats.RootMeanSquare(samples2, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+                Variance2 = Stats.Variance(samples2, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+                AveragePower2 = Stats.AveragePower(samples2, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+                
+                OnPropertyChanged(nameof(AverageValue2));
+                OnPropertyChanged(nameof(AverageAbsValue2));
+                OnPropertyChanged(nameof(RootMeanSquare2));
+                OnPropertyChanged(nameof(Variance2));
+                OnPropertyChanged(nameof(AveragePower2));
+            }
+        }
+
+        public string AveragePower2 { get; set; }
+
+        public string Variance2 { get; set; }
+
+        public string RootMeanSquare2 { get; set; }
+
+        public string AverageAbsValue2 { get; set; }
+
+        public string AverageValue2 { get; set; }
+
+        public string AveragePower1 { get; set; }
+        public string Variance1 { get; set; }
+        public string RootMeanSquare1 { get; set; }
+        public string AverageAbsValue1 { get; set; }
+        public string AverageValue1 { get; set; }
+
+
         private void Generate(object sender, RoutedEventArgs e)
         {
             BaseSignal s1 = (BaseSignal) SelectedSignalFirst.Signal.Clone();
@@ -90,7 +159,7 @@ namespace CPS
             Signal2 = new DiscreteSignal(Frequency, s2);
 
             RebuildChart(null, null);
-            RebuildHistogram(null, null);
+            RebuildHistogram(null, null); 
         }
 
         private void Operation(object sender, RoutedEventArgs e)
@@ -110,6 +179,8 @@ namespace CPS
             ChartWrapper.AddSeries(Signal1);
             if (SecondSignalEnabled)
                 ChartWrapper.AddSeries(Signal2);
+            
+            CalculateSignalsStats();
         }
         private void RebuildHistogram(object sender, RoutedEventArgs e)
         {
@@ -158,5 +229,12 @@ namespace CPS
             RebuildHistogram(null, null);
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

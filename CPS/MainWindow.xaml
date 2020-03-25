@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:local="clr-namespace:CPS"
+        xmlns:signal="clr-namespace:CPS.Signal"
         mc:Ignorable="d"
         Title="Cyfrowe przetwarzanie sygnałów" Height="717" Width="849">
     <Grid>
@@ -22,12 +23,13 @@
                 <TabItem.Header>
                     <Label Content="Wykres" />
                 </TabItem.Header>
-                <lvc:CartesianChart x:Name="Chart" Series="{Binding SeriesCollection}" LegendLocation="Bottom" DisableAnimations="True" Margin="5">
+                <lvc:CartesianChart x:Name="Chart" Series="{Binding SeriesCollection}" LegendLocation="Bottom"
+                                    DisableAnimations="True" Margin="5">
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Y" Labels="{Binding YFormatter}"></lvc:Axis>
+                        <lvc:Axis Title="Y" Labels="{Binding YFormatter}" />
                     </lvc:CartesianChart.AxisY>
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="X" Labels="{Binding XFormatter}"></lvc:Axis>
+                        <lvc:Axis Title="X" Labels="{Binding XFormatter}" />
                     </lvc:CartesianChart.AxisX>
                 </lvc:CartesianChart>
             </TabItem>
@@ -35,168 +37,272 @@
                 <TabItem.Header>
                     <Label Content="Histogram" />
                 </TabItem.Header>
-                <lvc:CartesianChart x:Name="Histogram" Series="{Binding SeriesCollection}" LegendLocation="Bottom" DisableAnimations="True" Margin="5">
+                <lvc:CartesianChart x:Name="Histogram" Series="{Binding SeriesCollection}" LegendLocation="Bottom"
+                                    DisableAnimations="True" Margin="5">
                     <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Y" Labels="{Binding YFormatter}"></lvc:Axis>
+                        <lvc:Axis Title="Y" Labels="{Binding YFormatter}" />
                     </lvc:CartesianChart.AxisY>
                     <lvc:CartesianChart.AxisX>
-                        <lvc:Axis Title="X" Labels="{Binding XFormatter}"></lvc:Axis>
+                        <lvc:Axis Title="X" Labels="{Binding XFormatter}" />
                     </lvc:CartesianChart.AxisX>
                 </lvc:CartesianChart>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Label Content="Staystyki" />
+                </TabItem.Header>
+                <Grid x:Name="StatsFirst">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition MaxWidth="100px" />
+                        <ColumnDefinition MaxWidth="20px" />
+                        <ColumnDefinition MaxWidth="100px" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Margin="20 0 0 0" Grid.Row="1" Grid.Column="0" FontSize="12px"
+                           VerticalContentAlignment="Center" Content="Wartość średnia:" />
+                    <Label Margin="20 0 0 0" Grid.Row="2" Grid.Column="0" FontSize="12px"
+                           VerticalContentAlignment="Center" Content="Wartość średnia bezwzględna:" />
+                    <Label Margin="20 0 0 0" Grid.Row="3" Grid.Column="0" FontSize="12px"
+                           VerticalContentAlignment="Center" Content="Wartość skuteczna:" />
+                    <Label Margin="20 0 0 0" Grid.Row="4" Grid.Column="0" FontSize="12px"
+                           VerticalContentAlignment="Center" Content="Wariancja:" />
+                    <Label Margin="20 0 0 0" Grid.Row="5" Grid.Column="0" FontSize="12px"
+                           VerticalContentAlignment="Center" Content="Moc średnia:" />
+
+
+                    <TextBox Grid.Row="1" Grid.Column="1" IsReadOnly="True" Height="21px"
+                             Text="{Binding AverageValue1}" />
+                    <TextBox Grid.Row="2" Grid.Column="1" IsReadOnly="True" Height="21px"
+                             Text="{Binding AverageAbsValue1}" />
+                    <TextBox Grid.Row="3" Grid.Column="1" IsReadOnly="True" Height="21px"
+                             Text="{Binding RootMeanSquare1}" />
+                    <TextBox Grid.Row="4" Grid.Column="1" IsReadOnly="True" Height="21px" Text="{Binding Variance1}" />
+                    <TextBox Grid.Row="5" Grid.Column="1" IsReadOnly="True" Height="21px" Text="{Binding AveragePower1}" />
+                    
+                    
+                    <TextBox Grid.Row="1" Grid.Column="3" IsReadOnly="True" Height="21px"
+                             Text="{Binding AverageValue2}" />
+                    <TextBox Grid.Row="2" Grid.Column="3" IsReadOnly="True" Height="21px"
+                             Text="{Binding AverageAbsValue2}" />
+                    <TextBox Grid.Row="3" Grid.Column="3" IsReadOnly="True" Height="21px"
+                             Text="{Binding RootMeanSquare2}" />
+                    <TextBox Grid.Row="4" Grid.Column="3" IsReadOnly="True" Height="21px" Text="{Binding Variance2}" />
+                    <TextBox Grid.Row="5" Grid.Column="3" IsReadOnly="True" Height="21px" Text="{Binding AveragePower2}" />
+                </Grid>
             </TabItem>
         </TabControl>
 
 
         <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Top">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition Height="0*"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="0*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Grid x:Name="FirstSignalParamGrid" Margin="30,0,30,10" Grid.Column="0" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Parametry sygnału 1" Grid.Column="0" Grid.Row="0" Margin="0" Grid.ColumnSpan="2" HorizontalContentAlignment="Center"/>
+                <Label Content="Parametry sygnału 1" Grid.Column="0" Grid.Row="0" Margin="0" Grid.ColumnSpan="2"
+                       HorizontalContentAlignment="Center" />
 
-                <Label Content="Amplituda (A)" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding A, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="1" Margin="10,5" Width="50" HorizontalAlignment="Left"/>
+                <Label Content="Amplituda (A)" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding A, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="1" Margin="10,5" Width="50" HorizontalAlignment="Left" />
 
-                <Label Content="Czas początkowy (t1)" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding t1, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="2" Margin="10,5" Width="50" HorizontalAlignment="Left"/>
+                <Label Content="Czas początkowy (t1)" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding t1, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="2" Margin="10,5" Width="50" HorizontalAlignment="Left" />
 
-                <Label Content="Czas trwania sygnału (d)" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding d, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="3" Margin="10,5" Width="50" HorizontalAlignment="Left"/>
+                <Label Content="Czas trwania sygnału (d)" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding d, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="3" Margin="10,5" Width="50" HorizontalAlignment="Left" />
 
-                <Label Content="Okres podstawowy (T)" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding T, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="4" Margin="10,5" Width="50" HorizontalAlignment="Left"/>
-                
-                <Label Content="Współczynnik wypełnienia (kw)" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding kw, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="5" Margin="10,5" Width="50" HorizontalAlignment="Left"/>
-                
-                <Label Content="Czas skoku (ts)" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding ts, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="6" Margin="10,5" Width="50" HorizontalAlignment="Left"/>
-                
-                <Label Content="Prawdopodobieństwo (p)" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding p, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="7" Margin="10,5" Width="50" HorizontalAlignment="Left"/>
-                
+                <Label Content="Okres podstawowy (T)" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding T, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="4" Margin="10,5" Width="50" HorizontalAlignment="Left" />
+
+                <Label Content="Współczynnik wypełnienia (kw)" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding kw, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="5" Margin="10,5" Width="50" HorizontalAlignment="Left" />
+
+                <Label Content="Czas skoku (ts)" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding ts, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="6" Margin="10,5" Width="50" HorizontalAlignment="Left" />
+
+                <Label Content="Prawdopodobieństwo (p)" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding p, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="7" Margin="10,5" Width="50" HorizontalAlignment="Left" />
+
             </Grid>
-            
-            <Grid x:Name="SelectSignalFirst" Margin="30,0,30,10" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Left">
+
+            <Grid x:Name="SelectSignalFirst" Margin="30,0,30,10" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"
+                  HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <Label Content="Sygnał pierwszy" Grid.Column="0" Grid.Row="0" Margin="0" HorizontalAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding SignalList}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSignalFirst}" x:Name="SignalFirst"
-                          Margin="0" VerticalAlignment="Center" Width="auto" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1"/>              
-                
-                <Button x:Name="SaveFirstSignalButton" Content="Save" Margin="0,5,0,0" Width="75" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Click="SaveSignal"/>
-                <Button x:Name="LoadFirstSignalButton" Content="Load" Margin="0,5,0,0" Width="75" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Click="LoadSignal"/>
+                <Label Content="Sygnał pierwszy" Grid.Column="0" Grid.Row="0" Margin="0" HorizontalAlignment="Center" />
+                <ComboBox ItemsSource="{Binding SignalList}" DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedSignalFirst}" x:Name="SignalFirst"
+                          Margin="0" VerticalAlignment="Center" Width="auto" HorizontalAlignment="Center"
+                          Grid.Column="0" Grid.Row="1" />
+
+                <Button x:Name="SaveFirstSignalButton" Content="Save" Margin="0,5,0,0" Width="75"
+                        HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"
+                        Click="SaveSignal" />
+                <Button x:Name="LoadFirstSignalButton" Content="Load" Margin="0,5,0,0" Width="75"
+                        HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"
+                        Click="LoadSignal" />
             </Grid>
-            
-            <Grid x:Name="SelectSignalSecond" Margin="30,0,30,10" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Left">
+
+            <Grid x:Name="SelectSignalSecond" Margin="30,0,30,10" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2"
+                  HorizontalAlignment="Left">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
-                <Label Content="Sygnał drugi" Grid.Column="0" Grid.Row="0" Margin="0" HorizontalAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding SignalList}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedSignalSecond}" x:Name="SignalSecond"
-                          Margin="0" VerticalAlignment="Center" Width="auto" HorizontalAlignment="Center" Grid.Column="0" Grid.Row="1"/>                
-                
-                <Button x:Name="SaveSecondSignalButton" Content="Save" Margin="0,5,0,0" Width="75" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Click="SaveSignal"/>
-                <Button x:Name="LoadSecondSignalButton" Content="Load" Margin="0,5,0,0" Width="75" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Click="LoadSignal"/>
+                <Label Content="Sygnał drugi" Grid.Column="0" Grid.Row="0" Margin="0" HorizontalAlignment="Center" />
+                <ComboBox ItemsSource="{Binding SignalList}" DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedSignalSecond}" x:Name="SignalSecond"
+                          Margin="0" VerticalAlignment="Center" Width="auto" HorizontalAlignment="Center"
+                          Grid.Column="0" Grid.Row="1" />
+
+                <Button x:Name="SaveSecondSignalButton" Content="Save" Margin="0,5,0,0" Width="75"
+                        HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0"
+                        Click="SaveSignal" />
+                <Button x:Name="LoadSecondSignalButton" Content="Load" Margin="0,5,0,0" Width="75"
+                        HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1"
+                        Click="LoadSignal" />
             </Grid>
 
             <Grid x:Name="SecondSignalParamGrid" Margin="30,0,30,10" Grid.Column="1" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
-                <CheckBox IsChecked="{Binding SecondSignalEnabled, Mode=TwoWay}" x:Name="SecondSignalEnabler" Content="Parametry sygnału 2" HorizontalContentAlignment="Center" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Padding="5,0,0,0" UseLayoutRounding="False" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <CheckBox IsChecked="{Binding SecondSignalEnabled, Mode=TwoWay}" x:Name="SecondSignalEnabler"
+                          Content="Parametry sygnału 2" HorizontalContentAlignment="Center" Grid.ColumnSpan="2"
+                          VerticalContentAlignment="Center" Padding="5,0,0,0" UseLayoutRounding="False"
+                          VerticalAlignment="Center" HorizontalAlignment="Center" />
 
-                <Label Content="Amplituda (A)" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding A, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="1" Margin="10,5" Width="50" HorizontalAlignment="Left" IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}"/>
+                <Label Content="Amplituda (A)" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding A, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="1" Margin="10,5" Width="50" HorizontalAlignment="Left"
+                         IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}" />
 
-                <Label Content="Czas początkowy (t1)" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding t1, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="2" Margin="10,5" Width="50" HorizontalAlignment="Left" IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}"/>
+                <Label Content="Czas początkowy (t1)" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding t1, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="2" Margin="10,5" Width="50" HorizontalAlignment="Left"
+                         IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}" />
 
-                <Label Content="Czas trwania sygnału (d)" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding d, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="3" Margin="10,5" Width="50" HorizontalAlignment="Left" IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}"/>
+                <Label Content="Czas trwania sygnału (d)" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding d, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="3" Margin="10,5" Width="50" HorizontalAlignment="Left"
+                         IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}" />
 
-                <Label Content="Okres podstawowy (T)" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding T, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="4" Margin="10,5" Width="50" HorizontalAlignment="Left" IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}"/>
-                
-                <Label Content="Współczynnik wypełnienia (kw)" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding kw, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="5" Margin="10,5" Width="50" HorizontalAlignment="Left" IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}"/>
-                
-                <Label Content="Czas skoku (ts)" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding ts, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="6" Margin="10,5" Width="50" HorizontalAlignment="Left" IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}"/>
-                
-                <Label Content="Prawdopodobieństwo (p)" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right"/>
-                <TextBox Text="{Binding p, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Grid.Row="7" Margin="10,5" Width="50" HorizontalAlignment="Left" IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}"/>
+                <Label Content="Okres podstawowy (T)" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding T, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="4" Margin="10,5" Width="50" HorizontalAlignment="Left"
+                         IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}" />
+
+                <Label Content="Współczynnik wypełnienia (kw)" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding kw, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="5" Margin="10,5" Width="50" HorizontalAlignment="Left"
+                         IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}" />
+
+                <Label Content="Czas skoku (ts)" Grid.Column="0" Grid.Row="6" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding ts, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="6" Margin="10,5" Width="50" HorizontalAlignment="Left"
+                         IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}" />
+
+                <Label Content="Prawdopodobieństwo (p)" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding p, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1"
+                         Grid.Row="7" Margin="10,5" Width="50" HorizontalAlignment="Left"
+                         IsEnabled="{Binding IsChecked, ElementName=SecondSignalEnabler}" />
             </Grid>
 
             <Grid Margin="0,0,0,10" Grid.Column="2" VerticalAlignment="Center">
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <ComboBox ItemsSource="{Binding OperationsList}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedOperation}" x:Name="SignalMode" Margin="0" VerticalAlignment="Center" Width="120" HorizontalAlignment="Center"/>
-                <Label Content="Próbkowanie (f)" Margin="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBox Text="{Binding Frequency, FallbackValue=100, Mode=TwoWay, StringFormat=\{0:F4\}}" Margin="0" Width="50" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1"/>
-                <Label Content="Liczba grup&#xD;&#xA;histogramu" Margin="0" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="2"/>
-                <TextBox x:Name="HistogramGroupCount" Text="{Binding HistogramGroupsCount, FallbackValue=50, Mode=TwoWay, StringFormat=\{0:D\}}" Margin="0" Width="50" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Grid.Column="1"/>
-                <Button Click="Generate" Content="Generuj" Margin="0,5,0,0" Width="auto" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2"/>
-                <Button Click="RebuildHistogram" Content="Odśwież histogram" Margin="0,5,0,0" Width="auto" HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2"/>
-                <Button Click="Operation" Content="Wykonaj" Margin="5,5,0,5" Width="auto" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.Column="1"/>
+                <ComboBox ItemsSource="{Binding OperationsList}" DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedOperation}" x:Name="SignalMode" Margin="0"
+                          VerticalAlignment="Center" Width="120" HorizontalAlignment="Center" />
+                <Label Content="Próbkowanie (f)" Margin="0" Grid.Row="1" VerticalAlignment="Center"
+                       HorizontalAlignment="Left" />
+                <TextBox Text="{Binding Frequency, FallbackValue=100, Mode=TwoWay, StringFormat=\{0:F4\}}" Margin="0"
+                         Width="50" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1" />
+                <Label Content="Liczba grup&#xD;&#xA;histogramu" Margin="0" VerticalAlignment="Center"
+                       HorizontalAlignment="Right" Grid.Row="2" />
+                <TextBox x:Name="HistogramGroupCount"
+                         Text="{Binding HistogramGroupsCount, FallbackValue=50, Mode=TwoWay, StringFormat=\{0:D\}}"
+                         Margin="0" Width="50" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center"
+                         Grid.Column="1" />
+                <Button Click="Generate" Content="Generuj" Margin="0,5,0,0" Width="auto"
+                        HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2" />
+                <Button Click="RebuildHistogram" Content="Odśwież histogram" Margin="0,5,0,0" Width="auto"
+                        HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2" />
+                <Button Click="Operation" Content="Wykonaj" Margin="5,5,0,5" Width="auto"
+                        HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Grid.ColumnSpan="2"
+                        Grid.Column="1" />
             </Grid>
 
 
