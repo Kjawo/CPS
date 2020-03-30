@@ -167,9 +167,9 @@ namespace CPS
             if (Signal2 != null)
             {
                 Signal1 = SelectedOperation.Operation.Process(Signal1, Signal2);
+                SecondSignalEnabler.IsChecked = false;
                 RebuildChart(null, null);
                 RebuildHistogram(null, null);
-                SecondSignalEnabler.IsChecked = false;
             }
         }
 
