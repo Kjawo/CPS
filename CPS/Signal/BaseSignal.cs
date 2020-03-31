@@ -28,7 +28,7 @@ namespace CPS.Signal
             List<Tuple<double, double>> Values = new List<Tuple<double, double>>();
             double from = Params().t1;
             double to = from + Params().d;
-            double step = Params().d / Frequency;
+            double step = 1 / Frequency;
             for (double x = from; x <= to; x += step)
             {
                 Values.Add(Tuple.Create(x, y(x)));

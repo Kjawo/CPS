@@ -38,7 +38,7 @@ namespace CPS.Signal
             List<Tuple<double, double>> Values = new List<Tuple<double, double>>();
             double from = p.t1;
             double to = from + p.d;
-            double step = p.d / Frequency;
+            double step = 1 / Frequency;
             for (double x = from; x <= to; x += step)
             {
                 if (Math.Abs(x - p.ts) < 0.0000001)
