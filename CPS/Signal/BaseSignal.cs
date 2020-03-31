@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Runtime.Serialization;
+using System.Collections.Generic;
 
 namespace CPS.Signal
 {
@@ -22,6 +22,19 @@ namespace CPS.Signal
         }
 
         protected abstract double yValueInRange(double x);
+
+        virtual public DiscreteSignal ToDiscrete(double Frequency)
+        {
+            List<Tuple<double, double>> Values = new List<Tuple<double, double>>();
+            double from = Params().t1;
+            double to = from + Params().d;
+            double step = Params().d / Frequency;
+            for (double x = from; x <= to; x += step)
+            {
+                Values.Add(Tuple.Create(x, y(x)));
+            }
+            return DiscreteSignal.ForParameters(Name(), Frequency, Values);
+        }
 
         public object Clone()
         {

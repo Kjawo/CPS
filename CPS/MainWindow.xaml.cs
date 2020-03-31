@@ -155,8 +155,8 @@ namespace CPS
             s1.SetParams(FirstSignalParams);
             s2.SetParams(SecondSignalParams);
 
-            Signal1 = new DiscreteSignal(Frequency, s1);
-            Signal2 = new DiscreteSignal(Frequency, s2);
+            Signal1 = s1.ToDiscrete(Frequency);
+            Signal2 = s2.ToDiscrete(Frequency);
 
             RebuildChart(null, null);
             RebuildHistogram(null, null); 

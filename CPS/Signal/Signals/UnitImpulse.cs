@@ -1,6 +1,5 @@
 ﻿using System;
-using CPS;
-using CPS.Signal;
+using System.Collections.Generic;
 
 namespace CPS.Signal
 {
@@ -28,12 +27,26 @@ namespace CPS.Signal
         protected override double yValueInRange(double x)
         {
             // ReSharper disable once CompareOfFloatsByEqualityOperator
-            if (x == p.ts)
-            {
+            if (x == p.ts)  
                 return p.A;   
-            }
 
             return 0;
+        }
+
+        public override DiscreteSignal ToDiscrete(double Frequency)
+        {
+            List<Tuple<double, double>> Values = new List<Tuple<double, double>>();
+            double from = p.t1;
+            double to = from + p.d;
+            double step = p.d / Frequency;
+            for (double x = from; x <= to; x += step)
+            {
+                if (Math.Abs(x - p.ts) < 0.0000001)
+                    Values.Add(Tuple.Create(x, p.A));
+                else
+                    Values.Add(Tuple.Create(x, 0.0));
+            }
+            return DiscreteSignal.ForParameters(Name(), Frequency, Values);
         }
 
         public override Params Params()

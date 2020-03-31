@@ -104,6 +104,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Graph1.dgml" />
     <None Include="packages.config" />
     <Compile Include="ChartWrapper.cs" />
     <Compile Include="MainWindow.xaml.cs">
