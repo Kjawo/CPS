@@ -28,15 +28,28 @@ namespace CPS
                 )
             );
 
-            LineSeries ls = new LineSeries
+            if (Signal.Name.Equals("unitImpulse") || Signal.Name.Equals("impulseNoise"))
             {
-                Title = Signal.Name,
-                Values = values,
-                Fill = System.Windows.Media.Brushes.Transparent,
-                PointGeometry = null
-            };
+                ScatterSeries ls = new ScatterSeries
+                {
+                    Title = Signal.Name,
+                    Values = values,
+                    MaxPointShapeDiameter = 6
+                };
+                SeriesCollection.Add(ls);
+            }
+            else
+            {
+                LineSeries ls = new LineSeries
+                {
+                    Title = Signal.Name,
+                    Values = values,
+                    Fill = System.Windows.Media.Brushes.Transparent,
+                    PointGeometry = null
+                };
+                SeriesCollection.Add(ls);
+            }
 
-            SeriesCollection.Add(ls);
         }
     }
 }
