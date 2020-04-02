@@ -12,7 +12,7 @@ namespace CPS
         public SeriesCollection SeriesCollection { get; } = new SeriesCollection();
         public Func<double, string> XFormatter { get; } = value => value.ToString();
         public Func<double, string> YFormatter { get; } = value => value.ToString();
-        private Series[] series = { null, null };
+        private Series[] series = { null, null, null };
         public int HistogramGroupsCount { get; set; } = 100;
         double MinSignalAmplitude { get; set; } = -1;
         double MaxSignalAmplitude { get; set; } = 1;

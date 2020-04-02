@@ -329,6 +329,8 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -337,20 +339,26 @@
                 <ComboBox ItemsSource="{Binding OperationsList}" DisplayMemberPath="Name"
                           SelectedItem="{Binding SelectedOperation}" x:Name="SignalMode" Margin="0"
                           VerticalAlignment="Center" Width="120" HorizontalAlignment="Center" />
-                <Label Content="Próbkowanie (f)" Margin="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" />
-                <TextBox Text="{Binding Frequency, FallbackValue=100, Mode=TwoWay, StringFormat=\{0:F4\}}" Margin="0"
-                         Width="50" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" Grid.Column="1" />
-                <Label Content="Liczba grup histogramu" Margin="0" VerticalAlignment="Center"
-                       HorizontalAlignment="Right" Grid.Row="2" />
-                <TextBox x:Name="HistogramGroupCount"
-                         Text="{Binding HistogramGroupsCount, FallbackValue=50, Mode=TwoWay, StringFormat=\{0:D\}}"
-                         Margin="0" Width="50" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center"
-                         Grid.Column="1" />
-                <Button Click="RebuildHistogram" Content="Odśwież histogram" Margin="0,5,0,0" Width="auto"
-                        HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2" />
                 <Button Click="Operation" Content="Wykonaj" Margin="5,5,0,5" Width="auto"
                         HorizontalContentAlignment="Center" VerticalAlignment="Bottom" Grid.ColumnSpan="2"
                         Grid.Column="1" />
+                <ComboBox ItemsSource="{Binding SlotsList}" x:Name="OperationSlot" Margin="0" VerticalAlignment="Center" Width="120" HorizontalAlignment="Center" Grid.Row="1" SelectedIndex="0" />
+                <Label Content="Slot" Margin="0" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="1" />
+                <Button x:Name="SaveOperationResult" Click="SaveSignal" Content="Zapisz wynik operacji" Margin="0,5,0,0" Width="auto"
+                        HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" />
+                <Button Click="ClearOperationResult" Content="Wyczyść wynik operacji" Margin="0,5,0,0" Width="auto"
+                        HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2" />
+                <Label Content="Próbkowanie (f)" Margin="0" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                <TextBox Text="{Binding Frequency, FallbackValue=100, Mode=TwoWay, StringFormat=\{0:F4\}}" Margin="0"
+                         Width="50" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Grid.Column="1" />
+                <Label Content="Liczba grup histogramu" Margin="0" VerticalAlignment="Center"
+                       HorizontalAlignment="Right" Grid.Row="5" />
+                <TextBox x:Name="HistogramGroupCount"
+                         Text="{Binding HistogramGroupsCount, FallbackValue=50, Mode=TwoWay, StringFormat=\{0:D\}}"
+                         Margin="0" Width="50" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Center"
+                         Grid.Column="1" />
+                <Button Click="RebuildHistogram" Content="Odśwież histogram" Margin="0,5,0,0" Width="auto"
+                        HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="6" Grid.ColumnSpan="2" />
             </Grid>
 
 

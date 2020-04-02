@@ -30,9 +30,9 @@ namespace CPS
 
         private ChartWrapper ChartWrapper = new ChartWrapper();
         private HistogramWrapper HistogramWrapper = new HistogramWrapper();
-        private DiscreteSignal[] Signals = { null, null };
-        private Params[] SignalParams = { new Params(), new Params() };
-        private SignalStats[] SignalStats = { new SignalStats(), new SignalStats() };
+        private DiscreteSignal[] Signals = { null, null, null };
+        private Params[] SignalParams = { new Params(), new Params(), new Params() };
+        private SignalStats[] SignalStats = { new SignalStats(), new SignalStats(), new SignalStats() };
         public double Frequency { get; set; } = 200;
 
         public List<OperationWrapper> OperationsList { get; } = new List<OperationWrapper>
@@ -60,8 +60,10 @@ namespace CPS
             new SignalWrapper() {Name = "Szum impulsowy", Signal = new ImpulseNoise()},
         };
 
+        public List<int> SlotsList { get; set; } = new List<int> { 1, 2, 3 };
+
         public OperationWrapper SelectedOperation { get; set; }
-        public SignalWrapper[] SelectedSignal { get; set; } = { null, null };
+        public SignalWrapper[] SelectedSignal { get; set; } = { null, null, null };
 
         public MainWindow()
         {
@@ -130,11 +132,22 @@ namespace CPS
             HistogramWrapper.Replot();
         }
 
+        private void ClearOperationResult(object sender, RoutedEventArgs e)
+        {
+            ClearSignal(2);
+        }
+
         private void Operation(object sender, RoutedEventArgs e)
         {
             if (Signals[0] != null && Signals[1] != null)
             {
-                Signals[0] = SelectedOperation.Operation.Process(Signals[0], Signals[2]);
+                int i = ((int)OperationSlot.SelectedItem) - 1;
+                Signals[i] = SelectedOperation.Operation.Process(Signals[0], Signals[1]);
+                ChartWrapper.SetSignal(i, Signals[i]);
+                ChartWrapper.Replot();
+                HistogramWrapper.SetSignal(i, Signals[i]);
+                HistogramWrapper.Replot();
+                CalculateSignalsStats();
             }
         }
 
@@ -148,6 +161,8 @@ namespace CPS
                 i = 0;
             else if (source == "SaveSecondSignalButton")
                 i = 1;
+            else if (source == "SaveOperationResult")
+                i = 2;
             binaryWrapper.SelectedSignal = SelectedSignal[i];
             binaryWrapper.SignalParams = SignalParams[i];
             binaryWrapper.DiscreteSignal = Signals[i];
