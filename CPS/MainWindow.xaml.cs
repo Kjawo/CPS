@@ -155,6 +155,9 @@ namespace CPS
         {
             string source = ((Button)sender).Name;
             string path = Serializer.FilePath(false);
+            if (string.IsNullOrEmpty(path))
+                return;
+
             int i = 0;
             BinaryWrapper binaryWrapper = new BinaryWrapper();
             if (source == "SaveFirstSignalButton")
@@ -173,6 +176,9 @@ namespace CPS
         {
             string source = ((Button)sender).Name;
             string path = Serializer.FilePath(true);
+            if (string.IsNullOrEmpty(path))
+                return;
+
             int i = 0;
             BinaryWrapper binaryWrapper = new BinaryWrapper();
             binaryWrapper = Serializer.ReadFromBinaryFile(path);
