@@ -12,6 +12,7 @@ namespace CPS
         public SeriesCollection SeriesCollection { get; } = new SeriesCollection();
         public Func<double, string> XFormatter { get; } = value => value.ToString();
         public Func<double, string> YFormatter { get; } = value => value.ToString();
+        private Series[] series = { null, null };
         public int HistogramGroupsCount { get; set; } = 100;
         double MinSignalAmplitude { get; set; } = -1;
         double MaxSignalAmplitude { get; set; } = 1;
@@ -21,16 +22,22 @@ namespace CPS
             SeriesCollection.Clear();
         }
 
-        public void AddSeries(DiscreteSignal Signal)
+        public void SetSignal(int n, DiscreteSignal Signal)
         {
-            ChartValues<ObservablePoint> values = new ChartValues<ObservablePoint>();
+            if (Signal == null)
+            {
+                series[n] = null;
+                return;
+            }
 
+            ChartValues<ObservablePoint> values = new ChartValues<ObservablePoint>();
             MinSignalAmplitude = Signal.GetValues().Min(tuple => tuple.Item2);
             MaxSignalAmplitude = Signal.GetValues().Max(tuple => tuple.Item2);
 
-            var aggregated = Signal.GetValues()
-                                   .GroupBy(QuantizedGrouping)
-                                   .Select(SelectSumOfOccurences);
+            var aggregated = Signal
+                .GetValues()
+                .GroupBy(QuantizedGrouping)
+                .Select(SelectSumOfOccurences);
 
             values.AddRange(
                 aggregated.Select(
@@ -38,14 +45,23 @@ namespace CPS
                 )
             );
 
-            ColumnSeries ls = new ColumnSeries
+            series[n] = new ColumnSeries
             {
                 Title = Signal.Name,
                 Values = values,
-                MaxColumnWidth = 5.0
+                MaxColumnWidth = 5.0,
+                Fill = ChartColors.List[n]
             };
+        }
 
-            SeriesCollection.Add(ls);
+        public void Replot()
+        {
+            SeriesCollection.Clear();
+            foreach (var serie in series)
+            {
+                if (serie != null)
+                    SeriesCollection.Add(serie);
+            }
         }
 
         private double QuantizedGrouping(Tuple<double, double> tuple)

@@ -16,6 +16,7 @@ namespace CPS
         public string Name { get; set; }
         public SignalOperation Operation { get; set; }
     }
+
     [Serializable]
     public class SignalWrapper
     {
@@ -23,18 +24,16 @@ namespace CPS
         public BaseSignal Signal { get; set; }
     }
 
-    public partial class MainWindow : Window, INotifyPropertyChanged
+    public partial class MainWindow : Window
     {
         public static Random Random = new Random();
 
-        private Params FirstSignalParams = new Params();
-        private Params SecondSignalParams = new Params();
         private ChartWrapper ChartWrapper = new ChartWrapper();
         private HistogramWrapper HistogramWrapper = new HistogramWrapper();
-        private DiscreteSignal Signal1;
-        private DiscreteSignal Signal2;
-        public double Frequency { get; set; } = 500;
-        public bool SecondSignalEnabled { get; set; } = false;
+        private DiscreteSignal[] Signals = { null, null };
+        private Params[] SignalParams = { new Params(), new Params() };
+        private SignalStats[] SignalStats = { new SignalStats(), new SignalStats() };
+        public double Frequency { get; set; } = 200;
 
         public List<OperationWrapper> OperationsList { get; } = new List<OperationWrapper>
         {
@@ -62,8 +61,7 @@ namespace CPS
         };
 
         public OperationWrapper SelectedOperation { get; set; }
-        public SignalWrapper SelectedSignalSecond { get; set; }
-        public SignalWrapper SelectedSignalFirst { get; set; }
+        public SignalWrapper[] SelectedSignal { get; set; } = { null, null };
 
         public MainWindow()
         {
@@ -72,141 +70,87 @@ namespace CPS
             Chart.DataContext = ChartWrapper;
             Histogram.DataContext = HistogramWrapper;
             HistogramGroupCount.DataContext = HistogramWrapper;
-            SecondSignalEnabler.DataContext = this;
-            FirstSignalParamGrid.DataContext = FirstSignalParams;
-            SecondSignalParamGrid.DataContext = SecondSignalParams;
-            SecondSignalParams.T = 0.2;
+            FirstSignalParamGrid.DataContext = SignalParams[0];
+            SecondSignalParamGrid.DataContext = SignalParams[1];
+            FirstSignalStats.DataContext = SignalStats[0];
+            SecondSignalStats.DataContext = SignalStats[1];
             SelectedOperation = OperationsList[0];
-            SelectedSignalFirst = SignalList[0];
-            SelectedSignalSecond = SignalList[1];
-            Generate(null, null);
+            SelectedSignal[0] = SignalList[0];
+            SelectedSignal[1] = SignalList[1];
         }
 
         public void CalculateSignalsStats()
         {
-            List<double> samples = new List<double>();
-            foreach (var value in Signal1.GetValues())
+            for (int i = 0; i < Signals.Length; i++)
             {
-                samples.Add(value.Item2);
-            }
-
-            double t1 = FirstSignalParams.t1;
-            double t2 = t1 + FirstSignalParams.d;
-
-            bool isDiscrete = false;
-            AverageValue1 = Stats.AverageValue(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
-            AverageAbsValue1 = Stats.AbsAverageValue(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
-            RootMeanSquare1 = Stats.RootMeanSquare(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
-            Variance1 = Stats.Variance(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
-            AveragePower1 = Stats.AveragePower(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
-            
-            OnPropertyChanged(nameof(AverageValue1));
-            OnPropertyChanged(nameof(AverageAbsValue1));
-            OnPropertyChanged(nameof(RootMeanSquare1));
-            OnPropertyChanged(nameof(Variance1));
-            OnPropertyChanged(nameof(AveragePower1));
-            
-            if (SecondSignalEnabler.IsChecked == true)
-            {
-                List<double> samples2 = new List<double>();
-                foreach (var value in Signal2.GetValues())
+                if (Signals[i] != null)
                 {
-                    samples2.Add(value.Item2);
+                    List<double> samples = new List<double>();
+                    foreach (var value in Signals[i].GetValues())
+                    {
+                        samples.Add(value.Item2);
+                    }
+
+                    double t1 = SignalParams[i].t1;
+                    double t2 = t1 + SignalParams[i].d;
+                    bool isDiscrete = false;
+                    SignalStats[i].AverageValue = Stats.AverageValue(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+                    SignalStats[i].AverageAbsValue = Stats.AbsAverageValue(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+                    SignalStats[i].RootMeanSquare = Stats.RootMeanSquare(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+                    SignalStats[i].Variance = Stats.Variance(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
+                    SignalStats[i].AveragePower = Stats.AveragePower(samples, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
                 }
-            
-                t1 = SecondSignalParams.t1;
-                t2 = t1 + SecondSignalParams.d;
-                
-                AverageValue2 = Stats.AverageValue(samples2, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
-                AverageAbsValue2 = Stats.AbsAverageValue(samples2, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
-                RootMeanSquare2 = Stats.RootMeanSquare(samples2, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
-                Variance2 = Stats.Variance(samples2, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
-                AveragePower2 = Stats.AveragePower(samples2, t1, t2, isDiscrete).ToString("0." + new string('#', 339));
-                
-                OnPropertyChanged(nameof(AverageValue2));
-                OnPropertyChanged(nameof(AverageAbsValue2));
-                OnPropertyChanged(nameof(RootMeanSquare2));
-                OnPropertyChanged(nameof(Variance2));
-                OnPropertyChanged(nameof(AveragePower2));
             }
-        }
-
-        public string AveragePower2 { get; set; }
-
-        public string Variance2 { get; set; }
-
-        public string RootMeanSquare2 { get; set; }
-
-        public string AverageAbsValue2 { get; set; }
-
-        public string AverageValue2 { get; set; }
-
-        public string AveragePower1 { get; set; }
-        public string Variance1 { get; set; }
-        public string RootMeanSquare1 { get; set; }
-        public string AverageAbsValue1 { get; set; }
-        public string AverageValue1 { get; set; }
-
+        } 
 
         private void Generate(object sender, RoutedEventArgs e)
         {
-            BaseSignal s1 = (BaseSignal) SelectedSignalFirst.Signal.Clone();
-            BaseSignal s2 = (BaseSignal) SelectedSignalSecond.Signal.Clone(); 
-            s1.SetParams(FirstSignalParams);
-            s2.SetParams(SecondSignalParams);
+            string source = ((Button)sender).Name;
+            int i = 0;
+            if (source == "GenerateFirstSignal")
+                i = 0;
+            else if (source == "GenerateSecondSignal")
+                i = 1;
+            BaseSignal s = (BaseSignal) SelectedSignal[i].Signal.Clone();
+            s.SetParams(SignalParams[i]);
+            Signals[i] = s.ToDiscrete(Frequency);
+            ChartWrapper.SetSignal(i, Signals[i]);
+            ChartWrapper.Replot();
+            HistogramWrapper.SetSignal(i, Signals[i]);
+            HistogramWrapper.Replot();
+            CalculateSignalsStats();
+        }
 
-            Signal1 = s1.ToDiscrete(Frequency);
-            Signal2 = s2.ToDiscrete(Frequency);
-
-            RebuildChart(null, null);
-            RebuildHistogram(null, null); 
+        private void ClearSignal(int i)
+        {
+            Signals[i] = null;
+            ChartWrapper.SetSignal(i, null);
+            HistogramWrapper.SetSignal(i, null);
+            ChartWrapper.Replot();
+            HistogramWrapper.Replot();
         }
 
         private void Operation(object sender, RoutedEventArgs e)
         {
-            if (Signal2 != null)
+            if (Signals[0] != null && Signals[1] != null)
             {
-                Signal1 = SelectedOperation.Operation.Process(Signal1, Signal2);
-                SecondSignalEnabler.IsChecked = false;
-                RebuildChart(null, null);
-                RebuildHistogram(null, null);
+                Signals[0] = SelectedOperation.Operation.Process(Signals[0], Signals[2]);
             }
-        }
-
-        private void RebuildChart(object sender, RoutedEventArgs e)
-        {
-            ChartWrapper.Clear();
-            ChartWrapper.AddSeries(Signal1);
-            if (SecondSignalEnabled)
-                ChartWrapper.AddSeries(Signal2);
-            
-            CalculateSignalsStats();
-        }
-        private void RebuildHistogram(object sender, RoutedEventArgs e)
-        {
-            HistogramWrapper.Clear();
-            HistogramWrapper.AddSeries(Signal1);
-            if (SecondSignalEnabled)
-                HistogramWrapper.AddSeries(Signal2);
         }
 
         private void SaveSignal(object sender, RoutedEventArgs e)
         {
             string source = ((Button)sender).Name;
             string path = Serializer.FilePath(false);
+            int i = 0;
             BinaryWrapper binaryWrapper = new BinaryWrapper();
             if (source == "SaveFirstSignalButton")
-            {
-                binaryWrapper.SelectedSignal = SelectedSignalFirst;
-                binaryWrapper.SignalParams = FirstSignalParams;
-                binaryWrapper.DiscreteSignal = Signal1;
-            }
+                i = 0;
             else if (source == "SaveSecondSignalButton")
-            {
-                binaryWrapper.SelectedSignal = SelectedSignalSecond;
-                binaryWrapper.SignalParams = SecondSignalParams;
-                binaryWrapper.DiscreteSignal = Signal2;
-            }
+                i = 1;
+            binaryWrapper.SelectedSignal = SelectedSignal[i];
+            binaryWrapper.SignalParams = SignalParams[i];
+            binaryWrapper.DiscreteSignal = Signals[i];
             Serializer.SaveToBinaryFile(binaryWrapper, path);
         }
 
@@ -214,27 +158,39 @@ namespace CPS
         {
             string source = ((Button)sender).Name;
             string path = Serializer.FilePath(true);
+            int i = 0;
             BinaryWrapper binaryWrapper = new BinaryWrapper();
             binaryWrapper = Serializer.ReadFromBinaryFile(path);
             if (source == "LoadFirstSignalButton")
-            {
-                Signal1 = binaryWrapper.DiscreteSignal;
-            }
+                i = 0;
             else if (source == "LoadSecondSignalButton")
-            {
-                Signal2 = binaryWrapper.DiscreteSignal;
-                SecondSignalEnabler.IsChecked = true;
-            }
-            RebuildChart(null, null);
-            RebuildHistogram(null, null);
+                i = 1;
+            Signals[i] = binaryWrapper.DiscreteSignal;
+            ChartWrapper.SetSignal(i, Signals[i]);
+            ChartWrapper.Replot();
+            HistogramWrapper.SetSignal(i, Signals[i]);
+            HistogramWrapper.Replot();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void RebuildHistogram(object sender, RoutedEventArgs e)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            for (int i = 0; i < Signals.Length; i++)
+            {
+                HistogramWrapper.SetSignal(i, Signals[i]);
+            }
+            HistogramWrapper.Replot();
         }
+
+        private void ClearSignalOnClick(object sender, RoutedEventArgs e)
+        {
+            string source = ((Button)sender).Name;
+            int i = 0;
+            if (source == "ClearFirstSignal")
+                i = 0;
+            else if (source == "ClearSecondSignal")
+                i = 1;
+            ClearSignal(i);
+        }
+
     }
 }

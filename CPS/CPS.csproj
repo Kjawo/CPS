@@ -73,9 +73,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChartColors.cs" />
     <Compile Include="HistogramWrapper.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Serializer.cs" />
+    <Compile Include="SignalStats.cs" />
     <Compile Include="Signal\Operations\DiffSignalOperation.cs" />
     <Compile Include="Signal\Operations\DivSignalOperation.cs" />
     <Compile Include="Signal\Operations\MulSignalOperation.cs" />
@@ -104,7 +106,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <None Include="ClassDiagram1.cd" />
     <None Include="Graph1.dgml" />
     <None Include="packages.config" />
     <Compile Include="ChartWrapper.cs" />
