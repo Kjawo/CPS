@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CPS.Signal
 {
-    public class Stats
+    public class StatsCalculator
     {
         public static double AverageValue(List<double> samples, double t1 = 0, double t2 = 0, bool isDiscrete = true)
         {

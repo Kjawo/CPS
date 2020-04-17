@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPS.Signal
 {
@@ -11,7 +8,7 @@ namespace CPS.Signal
     {
         public string Name { get; private set; }
         public double Frequency { get; private set; }
-        public List<Tuple<double, double>> Values { get; } = new List<Tuple<double, double>>();
+        public List<Tuple<double, double>> Values { get; protected set; } = new List<Tuple<double, double>>();
 
         public static DiscreteSignal ForParameters(string name, double frequency,
             List<Tuple<double, double>> values)
