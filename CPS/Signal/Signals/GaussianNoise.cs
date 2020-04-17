@@ -7,17 +7,14 @@ namespace CPS.Signal
     {
         private Params p = new Params();
 
+        override public string Name { get => "gauss"; }
+
         public GaussianNoise()
         {
             p.A = 1;
             p.d = 10;
             p.T = 1;
             p.t1 = 0;
-        }
-
-        public override string Name()
-        {
-            return "gauss";
         }
 
         //See https://mathworld.wolfram.com/Box-MullerTransformation.html
@@ -30,16 +27,6 @@ namespace CPS.Signal
             double normal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2);
 
             return normal * stdDev;
-        }
-
-        public override Params Params()
-        {
-            return p;
-        }
-
-        public override void SetParams(Params Params)
-        {
-            p = Params;
         }
     }
 }

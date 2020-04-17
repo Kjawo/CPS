@@ -7,6 +7,8 @@ namespace CPS.Signal
     {
         private Params p = new Params();
 
+        override public string Name { get => "uniformDistribution"; }
+
         public UniformDistributionNoise()
         {
             p.A = 1;
@@ -15,24 +17,9 @@ namespace CPS.Signal
             p.t1 = 0;
         }
 
-        public override string Name()
-        {
-            return "uniformD";
-        }
-
         protected override double yValueInRange(double x)
         {
             return 2* p.A * MainWindow.Random.NextDouble() - p.A;
-        }
-
-        public override Params Params()
-        {
-            return p;
-        }
-
-        public override void SetParams(Params Params)
-        {
-            p = Params;
         }
     }
 }

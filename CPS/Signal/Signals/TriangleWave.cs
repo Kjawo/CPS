@@ -9,6 +9,8 @@ namespace CPS.Signal
     {
         private Params p = new Params();
 
+        override public string Name { get => "triangleWave"; }
+
         public TriangleWave()
         {
             p.A = 1;
@@ -20,11 +22,6 @@ namespace CPS.Signal
             p.ts = 2;
         }
 
-        public override string Name()
-        {
-            return "triangleWave";
-        }
-
         protected override double yValueInRange(double x)
         {
             int k = (int)((x / p.T) - (p.t1 / p.T));
@@ -34,16 +31,6 @@ namespace CPS.Signal
             }
 
             return -p.A / (p.T * (1 - p.kw)) * (x - k * p.T - p.t1) + (p.A / (1 - p.kw));
-        }
-
-        public override Params Params()
-        {
-            return p;
-        }
-
-        public override void SetParams(Params Params)
-        {
-            p = Params;
         }
     }
 }

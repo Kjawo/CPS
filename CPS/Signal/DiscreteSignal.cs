@@ -23,7 +23,7 @@ namespace CPS.Signal
             return Signal;
         }
 
-        private DiscreteSignal()
+        public DiscreteSignal()
         {
         }
 

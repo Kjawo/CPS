@@ -9,6 +9,8 @@ namespace CPS.Signal
     {
         private Params p = new Params();
 
+        override public string Name { get => "impulseNoise"; }
+
         public ImpulseNoise()
         {
             p.A = 1;
@@ -20,11 +22,6 @@ namespace CPS.Signal
             p.ts = 2;
         }
 
-        public override string Name()
-        {
-            return "impulseNoise";
-        }
-
         protected override double yValueInRange(double x)
         {
             if (p.p > MainWindow.Random.NextDouble())
@@ -33,16 +30,6 @@ namespace CPS.Signal
             }
 
             return 0;
-        }
-
-        public override Params Params()
-        {
-            return p;
-        }
-
-        public override void SetParams(Params Params)
-        {
-            p = Params;
         }
     }
 }

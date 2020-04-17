@@ -1,11 +1,8 @@
 ﻿using System;
 using CPS.Signal;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
-using CPS.Annotations;
 using CPS.Signal.Operations;
 
 namespace CPS
@@ -114,7 +111,7 @@ namespace CPS
             else if (source == "GenerateSecondSignal")
                 i = 1;
             BaseSignal s = (BaseSignal) SelectedSignal[i].Signal.Clone();
-            s.SetParams(SignalParams[i]);
+            s.Params = SignalParams[i];
             Signals[i] = s.ToDiscrete(Frequency);
             ChartWrapper.SetSignal(i, Signals[i]);
             ChartWrapper.Replot();

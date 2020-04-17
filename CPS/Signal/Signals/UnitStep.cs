@@ -7,8 +7,9 @@ namespace CPS.Signal
     [Serializable]
     public class UnitStep : BaseSignal
     {
-        
         private Params p = new Params();
+
+        override public string Name { get => "unitStep"; }
 
         public UnitStep()
         {
@@ -19,11 +20,6 @@ namespace CPS.Signal
             
             p.kw = 0.5;
             p.ts = 2;
-        }
-
-        public override string Name()
-        {
-            return "unitStep";
         }
 
         protected override double yValueInRange(double x)
@@ -39,16 +35,6 @@ namespace CPS.Signal
             }
 
             return 0;
-        }
-
-        public override Params Params()
-        {
-            return p;
-        }
-
-        public override void SetParams(Params Params)
-        {
-            p = Params;
         }
     }
 }

@@ -9,6 +9,8 @@ namespace CPS.Signal
     {
         private Params p = new Params();
 
+        override public string Name { get => "squareWave"; }
+
         public SquareWaveSignal()
         {
             p.A = 1;
@@ -19,12 +21,6 @@ namespace CPS.Signal
             p.kw = 0.5;
             p.ts = 2;
         }
-
-        public override string Name()
-        {
-            return "squareWave";
-        }
-
         protected override double yValueInRange(double x)
         {
             int k = (int)((x / p.T) - (p.t1 / p.T));
@@ -34,16 +30,6 @@ namespace CPS.Signal
             }
 
             return 0;
-        }
-
-        public override Params Params()
-        {
-            return p;
-        }
-
-        public override void SetParams(Params Params)
-        {
-            p = Params;
         }
     }
 }

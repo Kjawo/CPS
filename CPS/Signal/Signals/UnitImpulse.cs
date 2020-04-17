@@ -8,6 +8,8 @@ namespace CPS.Signal
     {
         private Params p = new Params();
 
+        override public string Name { get => "unitImpulse"; }
+
         public UnitImpulse()
         {
             p.A = 1;
@@ -17,11 +19,6 @@ namespace CPS.Signal
             
             p.kw = 0.5;
             p.ts = 2;
-        }
-
-        public override string Name()
-        {
-            return "unitImpulse";
         }
 
         protected override double yValueInRange(double x)
@@ -46,17 +43,7 @@ namespace CPS.Signal
                 else
                     Values.Add(Tuple.Create(x, 0.0));
             }
-            return DiscreteSignal.ForParameters(Name(), Frequency, Values);
-        }
-
-        public override Params Params()
-        {
-            return p;
-        }
-
-        public override void SetParams(Params Params)
-        {
-            p = Params;
+            return DiscreteSignal.ForParameters(Name, Frequency, Values);
         }
     }
 }
