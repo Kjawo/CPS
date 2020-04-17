@@ -31,11 +31,10 @@ namespace CPS
             }
 
             ChartValues<ObservablePoint> values = new ChartValues<ObservablePoint>();
-            MinSignalAmplitude = Signal.GetValues().Min(tuple => tuple.Item2);
-            MaxSignalAmplitude = Signal.GetValues().Max(tuple => tuple.Item2);
+            MinSignalAmplitude = Signal.Values.Min(tuple => tuple.Item2);
+            MaxSignalAmplitude = Signal.Values.Max(tuple => tuple.Item2);
 
-            var aggregated = Signal
-                .GetValues()
+            var aggregated = Signal.Values
                 .GroupBy(QuantizedGrouping)
                 .Select(SelectSumOfOccurences);
 

@@ -9,8 +9,8 @@ namespace CPS.Signal.Operations
         public override DiscreteSignal Process(DiscreteSignal a, DiscreteSignal b)
         {
             var Aggregated = new List<Tuple<double, double>>();
-            Aggregated.AddRange(a.GetValues());
-            Aggregated.AddRange(b.GetValues());
+            Aggregated.AddRange(a.Values);
+            Aggregated.AddRange(b.Values);
             var Added = Aggregated
                 .GroupBy(tuple => tuple.Item1)
                 .Select(group => new Tuple<double, double>(

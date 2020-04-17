@@ -85,7 +85,7 @@ namespace CPS
                 if (Signals[i] != null)
                 {
                     List<double> samples = new List<double>();
-                    foreach (var value in Signals[i].GetValues())
+                    foreach (var value in Signals[i].Values)
                     {
                         samples.Add(value.Item2);
                     }

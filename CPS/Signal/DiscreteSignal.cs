@@ -11,25 +11,20 @@ namespace CPS.Signal
     {
         public string Name { get; private set; }
         public double Frequency { get; private set; }
-        private List<Tuple<double, double>> Values = new List<Tuple<double, double>>();
+        public List<Tuple<double, double>> Values { get; } = new List<Tuple<double, double>>();
 
-        public static DiscreteSignal ForParameters(string Name, double Frequency,
-            List<Tuple<double, double>> Values)
+        public static DiscreteSignal ForParameters(string name, double frequency,
+            List<Tuple<double, double>> values)
         {
             DiscreteSignal Signal = new DiscreteSignal();
-            Signal.Frequency = Frequency;
-            Signal.Values = Values;
-            Signal.Name = Name;
+            Signal.Frequency = frequency;
+            Signal.Values.AddRange(values);
+            Signal.Name = name;
             return Signal;
         }
 
         public DiscreteSignal()
         {
-        }
-
-        public List<Tuple<double, double>> GetValues()
-        {
-            return Values;
         }
     }
 }
