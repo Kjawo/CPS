@@ -7,31 +7,29 @@ namespace CPS.Signal
     [Serializable]
     public class UnitStep : BaseSignal
     {
-        private Params p = new Params();
-
         override public string Name { get => "unitStep"; }
 
         public UnitStep()
         {
-            p.A = 1;
-            p.d = 10;
-            p.T = 1;
-            p.t1 = 0;
+            Params.A = 1;
+            Params.d = 10;
+            Params.T = 1;
+            Params.t1 = 0;
             
-            p.kw = 0.5;
-            p.ts = 2;
+            Params.kw = 0.5;
+            Params.ts = 2;
         }
 
         protected override double yValueInRange(double x)
         {
-            if (x > p.ts)
+            if (x > Params.ts)
             {
-                return p.A;
+                return Params.A;
             }
 
-            if (x.Equals(p.ts))
+            if (x.Equals(Params.ts))
             {
-                return 0.5 * p.A;
+                return 0.5 * Params.A;
             }
 
             return 0;

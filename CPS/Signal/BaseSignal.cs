@@ -8,7 +8,7 @@ namespace CPS.Signal
     {
         public abstract string Name { get; }
 
-        public Params Params { get; set; }
+        public Params Params { get; set; } = new Params();
 
         virtual public DiscreteSignal ToDiscrete(double Frequency)
         {

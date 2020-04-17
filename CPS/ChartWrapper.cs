@@ -7,7 +7,6 @@ using CPS.Signal;
 
 namespace CPS
 {
-
     class ChartWrapper
     {
         public SeriesCollection SeriesCollection { get; } = new SeriesCollection();
