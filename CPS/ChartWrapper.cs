@@ -41,7 +41,7 @@ namespace CPS
                     Title = Signal.Name,
                     Values = values,
                     MaxPointShapeDiameter = 6,
-                    Stroke = ChartColors.List[n]
+                    Stroke = ChartColors.List[n],
                 };
             }
             else
@@ -52,7 +52,8 @@ namespace CPS
                     Values = values,
                     Fill = System.Windows.Media.Brushes.Transparent,
                     PointGeometry = null,
-                    Stroke = ChartColors.List[n]
+                    Stroke = ChartColors.List[n],
+                    LineSmoothness = 0
                 };
             }
 

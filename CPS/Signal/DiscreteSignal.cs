@@ -6,7 +6,7 @@ namespace CPS.Signal
     [Serializable]
     public class DiscreteSignal
     {
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
         public double Frequency { get; private set; }
         public List<Tuple<double, double>> Values { get; protected set; } = new List<Tuple<double, double>>();
 

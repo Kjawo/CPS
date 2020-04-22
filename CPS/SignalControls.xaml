@@ -5,10 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CPS"
              mc:Ignorable="d" 
-             d:DesignHeight="330" d:DesignWidth="440">
+             d:DesignHeight="630" d:DesignWidth="645">
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition />
             <RowDefinition />
             <RowDefinition />
         </Grid.RowDefinitions>
@@ -73,9 +74,9 @@
                 <RowDefinition />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            
+
             <Label Content="Typ sygnału" Grid.Column="0" Grid.Row="0" Margin="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" VerticalAlignment="Bottom" />
-            
+
             <ComboBox ItemsSource="{Binding SignalList}" DisplayMemberPath="Name"
                           SelectedItem="{Binding SelectedSignal}" x:Name="SignalType"
                           Margin="0" VerticalAlignment="Center" Width="auto" HorizontalAlignment="Center"
@@ -93,6 +94,26 @@
             <Button Content="Wyczyść" Margin="3,3,6,6" Width="75"
                         HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1"
                         Click="ClearSignal" HorizontalAlignment="Left" />
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            
+            <Label Content="Krok kwantyzacji" HorizontalAlignment="Right" Margin="0,0,3,0" VerticalAlignment="Center"/>
+            <Label Content="Częstotliwość próbkowania" HorizontalAlignment="Right" Margin="0,0,3,0" Grid.Row="1" VerticalAlignment="Center"/>
+            <Button Content="Konwersja A/C" HorizontalAlignment="Center" Margin="0" Grid.Row="2" VerticalAlignment="Center" Width="100" Grid.ColumnSpan="2" Click="Digitalize"/>
+            <TextBox Text="{Binding QuantizationStep, FallbackValue=0.1, Mode=TwoWay, StringFormat=\{0:F4\}}" Margin="10,5" Width="50" HorizontalAlignment="Left" Grid.Column="1" />
+            <TextBox Text="{Binding SamplingFreq, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Margin="10,5" Width="50" HorizontalAlignment="Left" Grid.Row="1" />
+
+
         </Grid>
     </Grid>
 

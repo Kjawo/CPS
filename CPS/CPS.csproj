@@ -90,7 +90,7 @@
     <Compile Include="Signal\BaseSignal.cs" />
     <Compile Include="Signal\Operations\SumSignalOperation.cs" />
     <Compile Include="Signal\Params.cs" />
-    <Compile Include="Signal\QuantizedSignal.cs" />
+    <Compile Include="Signal\DigitalizedSignal.cs" />
     <Compile Include="Signal\Signals\ImpulseNoise.cs" />
     <Compile Include="Signal\Signals\SineWaveFullRectified.cs" />
     <Compile Include="Signal\Signals\SineWaveHalfRectified.cs" />

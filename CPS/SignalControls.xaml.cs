@@ -32,9 +32,11 @@ namespace CPS
             new SignalWrapper {Name = "Szum impulsowy", Signal = new ImpulseNoise()},
         };
 
-        public string Title { get; set; } = "Parametry sygnału";
+        public string Title { get; set; } = "";
         public int SignalSlot { get; set; } = 0;
         public double Frequency { get; set; } = 200;
+        public double SamplingFreq { get; set; } = 10;
+        public double QuantizationStep { get; set; } = 0.1;
         public ChartWrapper ChartWrapper { get; set; } = null;
         public HistogramWrapper HistogramWrapper { get; set; } = null;
         public SignalWrapper SelectedSignal { get; set; } = null;
@@ -90,6 +92,15 @@ namespace CPS
             if (string.IsNullOrEmpty(path)) return;
             BinaryWrapper binaryWrapper = Serializer.ReadFromBinaryFile(path);
             Signal = binaryWrapper.DiscreteSignal;
+            ChartWrapper.SetSignal(SignalSlot, Signal);
+            ChartWrapper.Replot();
+            HistogramWrapper.SetSignal(SignalSlot, Signal);
+            HistogramWrapper.Replot();
+        }
+
+        private void Digitalize(object sender, RoutedEventArgs e)
+        {
+            Signal = new DigitalizedSignal(Signal, QuantizationStep, SamplingFreq);
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ChartWrapper.Replot();
             HistogramWrapper.SetSignal(SignalSlot, Signal);
