@@ -12,7 +12,7 @@ namespace CPS.Signal
 
         public DigitalizedSignal(DiscreteSignal signal, double quantizationStep, double frequency)
         {
-            this.Name = signal.Name;
+            this.Name = "Digital";
             this.quantizationStep = quantizationStep;
             this.frequency = frequency;
             this.original = signal;

@@ -12,6 +12,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <Grid x:Name="ParamsGrid">
@@ -112,8 +113,23 @@
             <Button Content="Konwersja A/C" HorizontalAlignment="Center" Margin="0" Grid.Row="2" VerticalAlignment="Center" Width="100" Grid.ColumnSpan="2" Click="Digitalize"/>
             <TextBox Text="{Binding QuantizationStep, FallbackValue=0.1, Mode=TwoWay, StringFormat=\{0:F4\}}" Margin="10,5" Width="50" HorizontalAlignment="Left" Grid.Column="1" />
             <TextBox Text="{Binding SamplingFreq, FallbackValue=1, Mode=TwoWay, StringFormat=\{0:F4\}}" Grid.Column="1" Margin="10,5" Width="50" HorizontalAlignment="Left" Grid.Row="1" />
+        </Grid>
 
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
+            <ComboBox ItemsSource="{Binding ConvertersList}" DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedConverter}" x:Name="ConversionType"
+                          Margin="0" VerticalAlignment="Center" Width="auto" HorizontalAlignment="Center"
+                          Grid.Column="0" Grid.Row="0" />
+
+            <Button Content="Konwersja C/A" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Width="100" Click="Analogize"/>
         </Grid>
     </Grid>
 

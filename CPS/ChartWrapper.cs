@@ -34,7 +34,7 @@ namespace CPS
                 )
             );
 
-            if (Signal.Name.Equals("unitImpulse") || Signal.Name.Equals("impulseNoise"))
+            if (Signal.Name.Equals("unitImpulse") || Signal.Name.Equals("impulseNoise") || Signal.Name.Equals("Digital"))
             {
                 series[n] = new ScatterSeries
                 {

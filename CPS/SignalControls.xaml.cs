@@ -1,4 +1,5 @@
 ﻿using CPS.Signal;
+using CPS.Signal.Converters;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -11,6 +12,12 @@ namespace CPS
     {
         public string Name { get; set; }
         public BaseSignal Signal { get; set; }
+    }
+
+    public class ConverterWrapper
+    {
+        public string Name { get; set; }
+        public DigitalToAnalogConverter Converter { get; set; }
     }
 
     public partial class SignalControls : UserControl
@@ -32,6 +39,13 @@ namespace CPS
             new SignalWrapper {Name = "Szum impulsowy", Signal = new ImpulseNoise()},
         };
 
+        public static List<ConverterWrapper> ConvertersList { get; } = new List<ConverterWrapper>
+        {
+            new ConverterWrapper {Name = "Ekstrapolacja zerowego rzędu", Converter = new ZeroOrderHoldConverter()},
+            new ConverterWrapper {Name = "Interpolacja pierwszego rzędu", Converter = new FirstOrderHoldConverter()},
+            new ConverterWrapper {Name = "Rekonstrukcja sinc", Converter = new SincConverter()},
+        };
+
         public string Title { get; set; } = "";
         public int SignalSlot { get; set; } = 0;
         public double Frequency { get; set; } = 200;
@@ -40,6 +54,7 @@ namespace CPS
         public ChartWrapper ChartWrapper { get; set; } = null;
         public HistogramWrapper HistogramWrapper { get; set; } = null;
         public SignalWrapper SelectedSignal { get; set; } = null;
+        public ConverterWrapper SelectedConverter { get; set; } = null;
         public DiscreteSignal Signal { get; set; } = null;
         public Params Params { get; set; } = new Params();
         public SignalStatsController StatsController { get; } = new SignalStatsController();
@@ -50,6 +65,7 @@ namespace CPS
             this.DataContext = this;
             ParamsGrid.DataContext = Params;
             SelectedSignal = SignalList[0];
+            SelectedConverter = ConvertersList[0];
         }
 
         public void Generate(object sender, RoutedEventArgs e)
@@ -101,6 +117,16 @@ namespace CPS
         private void Digitalize(object sender, RoutedEventArgs e)
         {
             Signal = new DigitalizedSignal(Signal, QuantizationStep, SamplingFreq);
+            ChartWrapper.SetSignal(SignalSlot, Signal);
+            ChartWrapper.Replot();
+            HistogramWrapper.SetSignal(SignalSlot, Signal);
+            HistogramWrapper.Replot();
+        }
+
+        private void Analogize(object sender, RoutedEventArgs e)
+        {
+            DigitalizedSignal digitalSignal = (DigitalizedSignal) Signal;
+            Signal = SelectedConverter.Converter.convert(digitalSignal, Frequency);
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ChartWrapper.Replot();
             HistogramWrapper.SetSignal(SignalSlot, Signal);
