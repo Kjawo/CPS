@@ -126,7 +126,7 @@ namespace CPS
         private void Analogize(object sender, RoutedEventArgs e)
         {
             DigitalizedSignal digitalSignal = (DigitalizedSignal) Signal;
-            Signal = SelectedConverter.Converter.convert(digitalSignal, Frequency);
+            Signal = SelectedConverter.Converter.Convert(digitalSignal, Frequency);
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ChartWrapper.Replot();
             HistogramWrapper.SetSignal(SignalSlot, Signal);

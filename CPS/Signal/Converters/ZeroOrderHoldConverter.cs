@@ -8,7 +8,7 @@ namespace CPS.Signal.Converters
 {
     class ZeroOrderHoldConverter : DigitalToAnalogConverter
     {
-        public DiscreteSignal convert(DigitalizedSignal signal, double frequency)
+        override public DiscreteSignal Convert(DigitalizedSignal signal, double frequency)
         {
             var values = new List<Tuple<double, double>>();
 
@@ -27,19 +27,6 @@ namespace CPS.Signal.Converters
             }
 
             return DiscreteSignal.ForParameters(signal.Name, frequency, values);
-        }
-
-        private List<double> NewTimeValues(DigitalizedSignal signal, double frequency)
-        {
-            double step = 1 / frequency;
-            double beginTime = signal.Values.First().Item1;
-            double endTime = signal.Values.Last().Item1;
-            var timeValues = new List<double>();
-            for (double x = beginTime; x <= endTime; x += step)
-            {
-                timeValues.Add(x);
-            }
-            return timeValues;
         }
     }
 }

@@ -40,8 +40,8 @@ namespace CPS
                 {
                     Title = Signal.Name,
                     Values = values,
-                    MaxPointShapeDiameter = 6,
-                    Stroke = ChartColors.List[n],
+                    MaxPointShapeDiameter = 3,
+                    Fill = ChartColors.List[n],
                 };
             }
             else

@@ -6,8 +6,21 @@ using System.Threading.Tasks;
 
 namespace CPS.Signal.Converters
 {
-    public interface DigitalToAnalogConverter
+    public abstract class DigitalToAnalogConverter
     {
-        DiscreteSignal convert(DigitalizedSignal signal, double frequency);
+        public abstract DiscreteSignal Convert(DigitalizedSignal signal, double frequency);
+
+        public List<double> NewTimeValues(DigitalizedSignal signal, double frequency)
+        {
+            double step = 1 / frequency;
+            double beginTime = signal.Values.First().Item1;
+            double endTime = signal.Values.Last().Item1;
+            var timeValues = new List<double>();
+            for (double x = beginTime; x <= endTime; x += step)
+            {
+                timeValues.Add(x);
+            }
+            return timeValues;
+        }
     }
 }

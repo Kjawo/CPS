@@ -8,7 +8,7 @@ namespace CPS.Signal.Converters
 {
     class SincConverter : DigitalToAnalogConverter
     {
-        public DiscreteSignal convert(DigitalizedSignal signal, double frequency)
+        override public DiscreteSignal Convert(DigitalizedSignal signal, double frequency)
         {
             return null;
         }
