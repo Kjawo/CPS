@@ -8,7 +8,15 @@ namespace CPS.Signal.Converters
 {
     public abstract class DigitalToAnalogConverter
     {
-        public abstract DiscreteSignal Convert(DigitalizedSignal signal, double frequency);
+        public DiscreteSignal Convert(DigitalizedSignal signal, double frequency)
+        {
+            List<double> timeValues = NewTimeValues(signal, frequency);
+            List<Tuple<double, double>> values = NewValues(signal.Values, timeValues);
+            return DiscreteSignal.ForParameters(signal.Name, signal.OriginalType, frequency, values);
+        }
+
+        protected abstract List<Tuple<double, double>> NewValues(List<Tuple<double,double>> signalValues,
+            List<double> newTimeValues);
 
         public List<double> NewTimeValues(DigitalizedSignal signal, double frequency)
         {

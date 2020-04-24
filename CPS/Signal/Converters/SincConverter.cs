@@ -8,7 +8,8 @@ namespace CPS.Signal.Converters
 {
     class SincConverter : DigitalToAnalogConverter
     {
-        override public DiscreteSignal Convert(DigitalizedSignal signal, double frequency)
+        protected override List<Tuple<double, double>> NewValues(List<Tuple<double, double>> signalValues,
+            List<double> newTimeValues)
         {
             return null;
         }

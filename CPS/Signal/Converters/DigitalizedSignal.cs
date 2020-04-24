@@ -8,15 +8,16 @@ namespace CPS.Signal
     {
         private double quantizationStep = 1;
         private double frequency = 1;
-        private DiscreteSignal original;
+
+        public SignalType OriginalType { get; private set; }
 
         public DigitalizedSignal(DiscreteSignal signal, double quantizationStep, double frequency)
         {
-            this.Name = "Digital";
+            this.Name = signal.Name;
+            this.Type = SignalType.DISCRETE;
+            this.OriginalType = signal.Type;
             this.quantizationStep = quantizationStep;
             this.frequency = frequency;
-            this.original = signal;
-
             Values = Sample(signal, frequency)
                 .Select(Quantize)
                 .ToList();

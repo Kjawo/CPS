@@ -106,6 +106,7 @@
     <Compile Include="Signal\Signals\UniformDistributionNoise.cs" />
     <Compile Include="Signal\Signals\UnitImpulse.cs" />
     <Compile Include="Signal\Signals\UnitStep.cs" />
+    <Compile Include="Signal\SignalType.cs" />
     <Compile Include="Signal\StatsCalculator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

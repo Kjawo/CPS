@@ -34,29 +34,36 @@ namespace CPS
                 )
             );
 
-            if (Signal.Name.Equals("unitImpulse") || Signal.Name.Equals("impulseNoise") || Signal.Name.Equals("Digital"))
-            {
-                series[n] = new ScatterSeries
-                {
-                    Title = Signal.Name,
-                    Values = values,
-                    MaxPointShapeDiameter = 3,
-                    Fill = ChartColors.List[n],
-                };
-            }
-            else
-            {
-                series[n] = new LineSeries
-                {
-                    Title = Signal.Name,
-                    Values = values,
-                    Fill = System.Windows.Media.Brushes.Transparent,
-                    PointGeometry = null,
-                    Stroke = ChartColors.List[n],
-                    LineSmoothness = 0
-                };
-            }
+            series[n] = CreateSeries(n, Signal, values);
+        }
 
+        private Series CreateSeries(int n, DiscreteSignal signal, ChartValues<ObservablePoint> values)
+        {
+            switch (signal.Type)
+            {
+                case SignalType.DISCRETE:
+                    return new ScatterSeries
+                    {
+                        Title = signal.Name,
+                        Values = values,
+                        MaxPointShapeDiameter = 3,
+                        Fill = ChartColors.List[n],
+                    };
+
+                case SignalType.CONTINUOUS:
+                    return new LineSeries
+                    {
+                        Title = signal.Name,
+                        Values = values,
+                        Fill = System.Windows.Media.Brushes.Transparent,
+                        PointGeometry = null,
+                        Stroke = ChartColors.List[n],
+                        LineSmoothness = 0
+                    };
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public void Replot()

@@ -6,8 +6,8 @@ namespace CPS.Signal
     [Serializable]
     public abstract class BaseSignal : ICloneable
     {
+        public virtual SignalType Type { get => SignalType.CONTINUOUS; }
         public abstract string Name { get; }
-
         public Params Params { get; set; } = new Params();
 
         virtual public DiscreteSignal ToDiscrete(double Frequency)
@@ -20,7 +20,7 @@ namespace CPS.Signal
             {
                 Values.Add(Tuple.Create(x, y(x)));
             }
-            return DiscreteSignal.ForParameters(Name, Frequency, Values);
+            return DiscreteSignal.ForParameters(Name, Type, Frequency, Values);
         }
 
         public double y(double x)

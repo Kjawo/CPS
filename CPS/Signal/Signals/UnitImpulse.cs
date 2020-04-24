@@ -6,7 +6,8 @@ namespace CPS.Signal
     [Serializable]
     public class UnitImpulse : BaseSignal
     {
-        override public string Name { get => "unitImpulse"; }
+        public override string Name { get => "unitImpulse"; }
+        public override SignalType Type { get => SignalType.DISCRETE; }
 
         public UnitImpulse()
         {
@@ -41,7 +42,7 @@ namespace CPS.Signal
                 else
                     Values.Add(Tuple.Create(x, 0.0));
             }
-            return DiscreteSignal.ForParameters(Name, Frequency, Values);
+            return DiscreteSignal.ForParameters(Name, Type, Frequency, Values);
         }
     }
 }

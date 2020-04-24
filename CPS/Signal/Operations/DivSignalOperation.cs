@@ -6,7 +6,7 @@ namespace CPS.Signal.Operations
 {
     class DivSignalOperation : SignalOperation
     {
-        public override DiscreteSignal Process(DiscreteSignal a, DiscreteSignal b)
+        protected override List<Tuple<double, double>> NewValues(DiscreteSignal a, DiscreteSignal b)
         {
             var Aggregated = new List<Tuple<double, double>>();
             Aggregated.AddRange(a.Values);
@@ -18,7 +18,7 @@ namespace CPS.Signal.Operations
                     group.Select(tuple => tuple.Item2).Aggregate((val1, val2) => val1 / val2))
                 )
                 .ToList();
-            return DiscreteSignal.ForParameters("div", a.Frequency, Added);
+            return Added;
         }
     }
 }

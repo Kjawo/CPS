@@ -7,7 +7,8 @@ namespace CPS.Signal
     [Serializable]
     public class ImpulseNoise : BaseSignal
     {
-        override public string Name { get => "impulseNoise"; }
+        public override string Name { get => "impulseNoise"; }
+        public override SignalType Type { get => SignalType.DISCRETE; }
 
         public ImpulseNoise()
         {
