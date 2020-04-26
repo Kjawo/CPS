@@ -11,12 +11,12 @@ namespace CPS.Signal.Converters
         public DiscreteSignal Convert(DigitalizedSignal signal, double frequency)
         {
             List<double> timeValues = NewTimeValues(signal, frequency);
-            List<Tuple<double, double>> values = NewValues(signal.Values, timeValues);
+            List<Tuple<double, double>> values = NewValues(signal.Values, timeValues, signal.frequency);
             return DiscreteSignal.ForParameters(signal.Name, signal.OriginalType, frequency, values);
         }
 
-        protected abstract List<Tuple<double, double>> NewValues(List<Tuple<double,double>> signalValues,
-            List<double> newTimeValues);
+        protected abstract List<Tuple<double, double>> NewValues(List<Tuple<double, double>> signalValues,
+            List<double> newTimeValues, double frequency);
 
         public List<double> NewTimeValues(DigitalizedSignal signal, double frequency)
         {

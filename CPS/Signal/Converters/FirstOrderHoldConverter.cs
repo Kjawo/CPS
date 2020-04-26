@@ -9,7 +9,7 @@ namespace CPS.Signal.Converters
     class FirstOrderHoldConverter : DigitalToAnalogConverter
     {
         protected override List<Tuple<double, double>> NewValues(List<Tuple<double, double>> signalValues,
-            List<double> newTimeValues)
+            List<double> newTimeValues, double frequency)
         {
             var values = new List<Tuple<double, double>>();
             var p1 = 0;

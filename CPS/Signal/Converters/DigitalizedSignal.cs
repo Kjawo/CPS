@@ -7,7 +7,7 @@ namespace CPS.Signal
     public class DigitalizedSignal : DiscreteSignal
     {
         private double quantizationStep = 1;
-        private double frequency = 1;
+        public double  frequency { get; private set; } = 1;
 
         public SignalType OriginalType { get; private set; }
 
