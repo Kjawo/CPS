@@ -116,5 +116,58 @@ namespace CPS.Signal
 
             return sum;
         }
+
+
+        //Conversion statistics
+        public static double MeanSquaredError(List<Tuple<double, double>> originalSignalValues,
+            List<Tuple<double, double>> sampledSignalValues)
+        {
+            int N = sampledSignalValues.Count;
+            double sum = 0;
+
+            for (int i = 0; i < N; i++)
+            {
+                sum += Math.Pow((originalSignalValues[i].Item2 - sampledSignalValues[i].Item2), 2);
+            }
+
+            return sum / N;
+        }
+
+        public static double SignalNoiseRatio(List<Tuple<double, double>> originalSignalValues,
+            List<Tuple<double, double>> sampledSignalValues)
+        {
+            double numerator = 0;
+            double denominator = 0;
+            int N = sampledSignalValues.Count;
+
+            for (int i = 0; i < N; i++)
+            {
+                numerator += Math.Pow(originalSignalValues[i].Item2, 2);
+            }
+
+            for (int i = 0; i < N; i++)
+            {
+                denominator += Math.Pow(originalSignalValues[i].Item2 - sampledSignalValues[i].Item2, 2);
+            }
+
+            return 10 * Math.Log10(numerator / denominator);
+        }
+
+        public static double MaxDifference(List<Tuple<double, double>> originalSignalValues,
+            List<Tuple<double, double>> sampledSignalValues)
+        {
+            double maxDifference = 0.0d;
+            double difference;
+            int N = sampledSignalValues.Count;
+
+            for(int i = 0; i < N; i++)
+            {
+                difference = Math.Abs(originalSignalValues[i].Item2 - sampledSignalValues[i].Item2);
+                if (difference > maxDifference)
+                    maxDifference = difference;
+            }
+
+            return maxDifference;
+        }
     }
 }

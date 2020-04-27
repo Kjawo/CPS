@@ -56,6 +56,7 @@ namespace CPS
         public SignalWrapper SelectedSignal { get; set; } = null;
         public ConverterWrapper SelectedConverter { get; set; } = null;
         public DiscreteSignal Signal { get; set; } = null;
+        public DiscreteSignal OriginalSignal { get; set; } = null;
         public Params Params { get; set; } = new Params();
         public SignalStatsController StatsController { get; } = new SignalStatsController();
 
@@ -73,6 +74,7 @@ namespace CPS
             BaseSignal s = (BaseSignal) SelectedSignal.Signal.Clone();
             s.Params = Params;
             Signal = s.ToDiscrete(Frequency);
+            OriginalSignal = s.ToDiscrete(Frequency);
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ChartWrapper.Replot();
             HistogramWrapper.SetSignal(SignalSlot, Signal);
@@ -127,6 +129,8 @@ namespace CPS
         {
             DigitalizedSignal digitalSignal = (DigitalizedSignal) Signal;
             Signal = SelectedConverter.Converter.Convert(digitalSignal, Frequency);
+            
+            StatsController.CalculateSignalConversionStats(OriginalSignal.Values, Signal.Values);
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ChartWrapper.Replot();
             HistogramWrapper.SetSignal(SignalSlot, Signal);

@@ -10,6 +10,10 @@ namespace CPS
         private string _RootMeanSquare = "";
         private string _AverageAbsValue = "";
         private string _AverageValue = "";
+        
+        private string _MeanSquaredError = "";
+        private string _SignalNoiseRatio = "";
+        private string _MaxDifference = "";
 
         public string AveragePower
         {
@@ -58,6 +62,36 @@ namespace CPS
             {
                 _AverageValue = value;
                 Notify("AverageValue");
+            }
+        }
+        
+        public string MeanSquaredError
+        {
+            get => _MeanSquaredError;
+            set
+            {
+                _MeanSquaredError = value;
+                Notify("MeanSquaredError");
+            }
+        }
+        
+        public string SignalNoiseRatio
+        {
+            get => _SignalNoiseRatio;
+            set
+            {
+                _SignalNoiseRatio = value;
+                Notify("SignalNoiseRatio");
+            }
+        }
+        
+        public string MaxDifference
+        {
+            get => _MaxDifference;
+            set
+            {
+                _MaxDifference = value;
+                Notify("MaxDifference");
             }
         }
 

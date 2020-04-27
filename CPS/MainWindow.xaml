@@ -73,6 +73,13 @@
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
 
                         <Label Margin="0" Grid.Row="0" Grid.Column="0" FontSize="12px"
@@ -95,10 +102,29 @@
                         <Label Margin="0" Grid.Row="9" Grid.Column="0" FontSize="12px"
                            VerticalContentAlignment="Center" Content="Moc średnia:" />
                         <TextBox Grid.Row="10" IsReadOnly="True" Height="21px" Text="{Binding AveragePower}" />
+                        
+                        <Label Margin="0" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" FontSize="12px"
+                               VerticalContentAlignment="Center" Content="Statystyki konwersji" />
+                        <Label Margin="0" Grid.Row="12" Grid.Column="0" FontSize="12px"
+                               VerticalContentAlignment="Center" Content="Błąd średniokwadratowy (MSE):" />
+                        <TextBox Grid.Row="13" IsReadOnly="True" Height="21px" Text="{Binding MeanSquaredError}" />
+                        <Label Margin="0" Grid.Row="14" Grid.Column="0" FontSize="12px"
+                               VerticalContentAlignment="Center" Content="Stosunek sygnał - szum (SNR):" />
+                        <TextBox Grid.Row="15" IsReadOnly="True" Height="21px" Text="{Binding SignalNoiseRatio}" />
+                        <Label Margin="0" Grid.Row="16" Grid.Column="0" FontSize="12px"
+                               VerticalContentAlignment="Center" Content="Maksymalna różnica (MD):" />
+                        <TextBox Grid.Row="17" IsReadOnly="True" Height="21px" Text="{Binding MaxDifference}" />
                     </Grid>
 
                     <Grid x:Name="SecondSignalStats" Grid.Column="1" Margin="0,0,20,0">
                         <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
@@ -132,6 +158,18 @@
                         <Label Margin="0" Grid.Row="9" Grid.Column="0" FontSize="12px"
                            VerticalContentAlignment="Center" Content="Moc średnia:" />
                         <TextBox Grid.Row="10" IsReadOnly="True" Height="21px" Text="{Binding AveragePower}" />
+                        
+                        <Label Margin="0" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" FontSize="12px"
+                               VerticalContentAlignment="Center" Content="Statystyki konwersji" />
+                        <Label Margin="0" Grid.Row="12" Grid.Column="0" FontSize="12px"
+                               VerticalContentAlignment="Center" Content="Błąd średniokwadratowy (MSE):" />
+                        <TextBox Grid.Row="13" IsReadOnly="True" Height="21px" Text="{Binding MeanSquaredError}" />
+                        <Label Margin="0" Grid.Row="14" Grid.Column="0" FontSize="12px"
+                               VerticalContentAlignment="Center" Content="Stosunek sygnał - szum (SNR):" />
+                        <TextBox Grid.Row="15" IsReadOnly="True" Height="21px" Text="{Binding SignalNoiseRatio}" />
+                        <Label Margin="0" Grid.Row="16" Grid.Column="0" FontSize="12px"
+                               VerticalContentAlignment="Center" Content="Maksymalna różnica (MD):" />
+                        <TextBox Grid.Row="17" IsReadOnly="True" Height="21px" Text="{Binding MaxDifference}" />
                     </Grid>
 
                 </Grid>
