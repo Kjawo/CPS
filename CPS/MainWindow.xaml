@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:CPS"
         xmlns:signal="clr-namespace:CPS.Signal"
         mc:Ignorable="d"
-        Title="Cyfrowe przetwarzanie sygnałów" Height="717" Width="849">
+        Title="Cyfrowe przetwarzanie sygnałów" Height="951" Width="836">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -102,7 +102,7 @@
                         <Label Margin="0" Grid.Row="9" Grid.Column="0" FontSize="12px"
                            VerticalContentAlignment="Center" Content="Moc średnia:" />
                         <TextBox Grid.Row="10" IsReadOnly="True" Height="21px" Text="{Binding AveragePower}" />
-                        
+
                         <Label Margin="0" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" FontSize="12px"
                                VerticalContentAlignment="Center" Content="Statystyki konwersji" />
                         <Label Margin="0" Grid.Row="12" Grid.Column="0" FontSize="12px"
@@ -158,7 +158,7 @@
                         <Label Margin="0" Grid.Row="9" Grid.Column="0" FontSize="12px"
                            VerticalContentAlignment="Center" Content="Moc średnia:" />
                         <TextBox Grid.Row="10" IsReadOnly="True" Height="21px" Text="{Binding AveragePower}" />
-                        
+
                         <Label Margin="0" Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" FontSize="12px"
                                VerticalContentAlignment="Center" Content="Statystyki konwersji" />
                         <Label Margin="0" Grid.Row="12" Grid.Column="0" FontSize="12px"
