@@ -43,34 +43,8 @@ namespace CPS.Signal
 
         private Tuple<double, double> Quantize(Tuple<double, double> value)
         {
-            if (value.Item2 >= 0) return Tuple.Create(value.Item1, PositiveQuant(value.Item2));
-            return Tuple.Create(value.Item1, NegativeQuant(value.Item2));
-        }
-
-        private double PositiveQuant(double value)
-        {
-            double low = 0;
-            double high = quantizationStep;
-            while (value > high)
-            {
-                low = high;
-                high += quantizationStep;
-            }
-            if (value < (high - low) / 2) return low;
-            return high;
-        }
-
-        private double NegativeQuant(double value)
-        {
-            double low = -quantizationStep;
-            double high = 0;
-            while (value < low)
-            {
-                high = low;
-                low -= quantizationStep;
-            }
-            if (value < (high - low) / 2) return low;
-            return high;
+            double newValue = Math.Round(value.Item2 / quantizationStep) * quantizationStep;
+            return Tuple.Create(value.Item1, newValue);
         }
     }
 }
