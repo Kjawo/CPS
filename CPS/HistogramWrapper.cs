@@ -67,7 +67,7 @@ namespace CPS
         {
             double step = (MaxSignalAmplitude - MinSignalAmplitude) / HistogramGroupsCount;
             double group = MinSignalAmplitude;
-            while (group <= tuple.Item2) group += step;
+            while (group < tuple.Item2) group += step;
             return group;
         }
 
