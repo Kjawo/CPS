@@ -5,10 +5,12 @@ namespace CPS.Signal.Operations
 {
     public abstract class SignalOperation
     {
+        protected abstract string Name { get; }
+
         public DiscreteSignal Process(DiscreteSignal a, DiscreteSignal b)
         {
             List<Tuple<double, double>> newValues = NewValues(a, b);
-            return DiscreteSignal.ForParameters("div", GetType(a.Type, b.Type), a.Frequency, newValues);
+            return DiscreteSignal.ForParameters(Name, GetType(a.Type, b.Type), a.Frequency, newValues);
         }
 
         private SignalType GetType(SignalType type1, SignalType type2)

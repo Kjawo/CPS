@@ -19,10 +19,11 @@ namespace CPS
 
         public List<OperationWrapper> OperationsList { get; } = new List<OperationWrapper>
         {
-            new OperationWrapper {Name = "Suma", Operation = new SumSignalOperation()},
-            new OperationWrapper {Name = "Różnica", Operation = new DiffSignalOperation()},
-            new OperationWrapper {Name = "Iloczyn", Operation = new MulSignalOperation()},
-            new OperationWrapper {Name = "Iloraz", Operation = new DivSignalOperation()},
+            new OperationWrapper {Name = "Suma", Operation = new Sum()},
+            new OperationWrapper {Name = "Różnica", Operation = new Difference()},
+            new OperationWrapper {Name = "Iloczyn", Operation = new Multiplication()},
+            new OperationWrapper {Name = "Iloraz", Operation = new Division()},
+            new OperationWrapper {Name = "Splot", Operation = new Convolution()},
         };
 
         private ChartWrapper ChartWrapper = new ChartWrapper();

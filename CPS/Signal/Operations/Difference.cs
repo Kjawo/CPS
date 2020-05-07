@@ -4,8 +4,10 @@ using System.Linq;
 
 namespace CPS.Signal.Operations
 {
-    class SumSignalOperation : SignalOperation
+    class Difference : SignalOperation
     {
+        protected override string Name => "diff";
+
         protected override List<Tuple<double, double>> NewValues(DiscreteSignal a, DiscreteSignal b)
         {
             var Aggregated = new List<Tuple<double, double>>();
@@ -15,8 +17,8 @@ namespace CPS.Signal.Operations
                 .GroupBy(tuple => tuple.Item1)
                 .Select(group => new Tuple<double, double>(
                     group.Key,
-                    group.Select(tuple => tuple.Item2).Sum()
-                ))
+                    group.Select(tuple => tuple.Item2).Aggregate((val1, val2) => val1 - val2))
+                )
                 .ToList();
             return Added;
         }
