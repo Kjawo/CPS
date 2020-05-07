@@ -4,6 +4,7 @@ using LiveCharts;
 using LiveCharts.Wpf;
 using LiveCharts.Defaults;
 using CPS.Signal;
+using System.Collections.Generic;
 
 namespace CPS
 {
@@ -14,8 +15,6 @@ namespace CPS
         public Func<double, string> YFormatter { get; } = value => value.ToString();
         private Series[] series = { null, null, null };
         public int HistogramGroupsCount { get; set; } = 100;
-        double MinSignalAmplitude { get; set; } = -1;
-        double MaxSignalAmplitude { get; set; } = 1;
 
         public void Clear()
         {
@@ -31,12 +30,8 @@ namespace CPS
             }
 
             ChartValues<ObservablePoint> values = new ChartValues<ObservablePoint>();
-            MinSignalAmplitude = Signal.Values.Min(tuple => tuple.Item2);
-            MaxSignalAmplitude = Signal.Values.Max(tuple => tuple.Item2);
 
-            var aggregated = Signal.Values
-                .GroupBy(QuantizedGrouping)
-                .Select(SelectSumOfOccurences);
+            var aggregated = AggregateHistogram(Signal.Values);
 
             values.AddRange(
                 aggregated.Select(
@@ -53,6 +48,18 @@ namespace CPS
             };
         }
 
+        private List<Tuple<double,int>> AggregateHistogram(List<Tuple<double, double>> values)
+        {
+            double min = values.Min(point => point.Item2);
+            double max = values.Max(point => point.Item2);
+            double step = (max - min) / HistogramGroupsCount;
+
+            return values.Select(tuple => Math.Floor((tuple.Item2 - min) / step))
+                .GroupBy(value => value)
+                .Select(group => Tuple.Create(min + step * group.Key, group.Count()))
+                .ToList();
+        }
+
         public void Replot()
         {
             SeriesCollection.Clear();
@@ -62,19 +69,5 @@ namespace CPS
                     SeriesCollection.Add(serie);
             }
         }
-
-        private double QuantizedGrouping(Tuple<double, double> tuple)
-        {
-            double step = (MaxSignalAmplitude - MinSignalAmplitude) / HistogramGroupsCount;
-            double group = MinSignalAmplitude;
-            while (group < tuple.Item2) group += step;
-            return group;
-        }
-
-        private Tuple<double, int> SelectSumOfOccurences(IGrouping<double, Tuple<double, double>> group)
-        {
-            return new Tuple<double, int>(group.Key, group.Sum(tuple => 1));
-        }
-
     }
 }
