@@ -7,18 +7,18 @@
         xmlns:local="clr-namespace:CPS"
         xmlns:signal="clr-namespace:CPS.Signal"
         mc:Ignorable="d"
-        Title="Cyfrowe przetwarzanie sygnałów" Height="951" Width="836">
+        Title="Cyfrowe przetwarzanie sygnałów" Width="1200" Height="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <TabControl>
+        <TabControl Grid.RowSpan="2">
             <TabItem>
                 <TabItem.Header>
                     <Label Content="Wykres" />
@@ -176,7 +176,23 @@
             </TabItem>
         </TabControl>
 
-        <Grid Grid.Row="1" Grid.Column="0" VerticalAlignment="Top">
+        <TabControl Grid.Column="1">
+            <TabItem>
+                <TabItem.Header>
+                    <Label Content="Sygnał 1" />
+                </TabItem.Header>
+                <local:SignalControls x:Name="FirstSignalControls" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="20,0,20,20" />
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <Label Content="Sygnał 2" />
+                </TabItem.Header>
+                <local:SignalControls x:Name="SecondSignalControls" Grid.Column="1" Margin="20,0,20,20" />
+            </TabItem>
+        </TabControl>
+
+        <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="0*" />
@@ -189,10 +205,10 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <local:SignalControls x:Name="FirstSignalControls" />
-            <local:SignalControls x:Name="SecondSignalControls" Grid.Column="1" />
 
-            <Grid Margin="0,0,0,10" Grid.Column="2" VerticalAlignment="Center">
+
+
+            <Grid Margin="20,0,20,20" Grid.Column="2" VerticalAlignment="Top" HorizontalAlignment="Center">
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
