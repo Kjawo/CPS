@@ -24,6 +24,7 @@ namespace CPS
             new OperationWrapper {Name = "Iloczyn", Operation = new Multiplication()},
             new OperationWrapper {Name = "Iloraz", Operation = new Division()},
             new OperationWrapper {Name = "Splot", Operation = new Convolution()},
+            new OperationWrapper {Name = "Korelacja przez splot", Operation = new IndirectCorrelation()},
         };
 
         private ChartWrapper ChartWrapper = new ChartWrapper();
