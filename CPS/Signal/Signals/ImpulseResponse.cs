@@ -13,14 +13,14 @@ namespace CPS.Signal.Signals
         private List<Tuple<double, double>> GenerateValues(int k, int m)
         {
             var values = new List<Tuple<double, double>>();
-            for (double n = 0; n < m; n++)
+            for (int n = 0; n < m; n++)
             {
                 double val = 0;
                 if (n == (m - 1) / 2)
-                    val = 2 / k;
+                    val = 2.0 / k;
                 else
                     val = Math.Sin(2 * Math.PI * (n - ((m - 1) / 2)) / k) / (Math.PI * (n - ((m - 1) / 2)));
-                values.Add(Tuple.Create(n, val));
+                values.Add(Tuple.Create((double)n, val));
             }
             return values;
         }
