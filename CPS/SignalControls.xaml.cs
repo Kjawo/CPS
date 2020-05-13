@@ -59,6 +59,8 @@ namespace CPS
         public DiscreteSignal Signal { get; set; } = null;
         public DiscreteSignal OriginalSignal { get; set; } = null;
         public Params Params { get; set; } = new Params();
+        public int K { get; set; } = 8;
+        public int M { get; set; } = 63;
         public SignalStatsController StatsController { get; } = new SignalStatsController();
 
         public SignalControls()
@@ -76,20 +78,14 @@ namespace CPS
             s.Params = Params;
             Signal = s.ToDiscrete(Frequency);
             OriginalSignal = s.ToDiscrete(Frequency);
-            ChartWrapper.SetSignal(SignalSlot, Signal);
-            ChartWrapper.Replot();
-            HistogramWrapper.SetSignal(SignalSlot, Signal);
-            HistogramWrapper.Replot();
             StatsController.CalculateSignalsStats(Signal, Params);
+            ReplotChartAndHistogram();
         }
 
         public void ClearSignal(object sender, RoutedEventArgs e)
         {
             Signal = null;
-            ChartWrapper.SetSignal(SignalSlot, null);
-            HistogramWrapper.SetSignal(SignalSlot, null);
-            ChartWrapper.Replot();
-            HistogramWrapper.Replot();
+            ReplotChartAndHistogram();
         }
 
         public void SaveSignal(object sender, RoutedEventArgs e)
@@ -111,38 +107,37 @@ namespace CPS
             if (string.IsNullOrEmpty(path)) return;
             BinaryWrapper binaryWrapper = Serializer.ReadFromBinaryFile(path);
             Signal = binaryWrapper.DiscreteSignal;
-            ChartWrapper.SetSignal(SignalSlot, Signal);
-            ChartWrapper.Replot();
-            HistogramWrapper.SetSignal(SignalSlot, Signal);
-            HistogramWrapper.Replot();
+            ReplotChartAndHistogram();
         }
 
         private void Digitalize(object sender, RoutedEventArgs e)
         {
             Signal = new DigitalizedSignal(Signal, QuantizationStep, SamplingFreq);
-            ChartWrapper.SetSignal(SignalSlot, Signal);
-            ChartWrapper.Replot();
-            HistogramWrapper.SetSignal(SignalSlot, Signal);
-            HistogramWrapper.Replot();
+            ReplotChartAndHistogram();
         }
 
         private void Analogize(object sender, RoutedEventArgs e)
         {
-            DigitalizedSignal digitalSignal = (DigitalizedSignal) Signal;
+            DigitalizedSignal digitalSignal = (DigitalizedSignal)Signal;
             Signal = SelectedConverter.Converter.Convert(digitalSignal, Frequency);
-            
             StatsController.CalculateSignalConversionStats(OriginalSignal.Values, Signal.Values);
+            ReplotChartAndHistogram();
+        }
+
+
+        private void GenerateImpulseResponse(object sender, RoutedEventArgs e)
+        {
+            Signal = new ImpulseResponse(K, M);
+            ChartWrapper.SetSignal(SignalSlot, Signal);
+            ReplotChartAndHistogram();
+        }
+
+        private void ReplotChartAndHistogram()
+        {
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ChartWrapper.Replot();
             HistogramWrapper.SetSignal(SignalSlot, Signal);
             HistogramWrapper.Replot();
-        }
-
-        private void GenerateImpulseResponse(object sender, RoutedEventArgs e)
-        {
-            Signal = new ImpulseResponse();
-            ChartWrapper.SetSignal(SignalSlot, Signal);
-            ChartWrapper.Replot();
         }
     }
 }

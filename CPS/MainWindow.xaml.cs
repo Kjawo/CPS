@@ -100,5 +100,10 @@ namespace CPS
         {
             HistogramWrapper.Replot();
         }
+
+        private void SecondSignalControls_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

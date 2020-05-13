@@ -5,9 +5,9 @@ namespace CPS.Signal.Signals
 {
     class ImpulseResponse : DiscreteSignal
     {
-        public ImpulseResponse()
+        public ImpulseResponse(int k, int m)
         {
-            Values = GenerateValues(8, 63);
+            Values = GenerateValues(k, m);
         }
 
         private List<Tuple<double, double>> GenerateValues(int k, int m)
