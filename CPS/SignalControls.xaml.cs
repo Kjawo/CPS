@@ -51,7 +51,7 @@ namespace CPS
         public int SignalSlot { get; set; } = 0;
         public double Frequency { get; set; } = 200;
         public double SamplingFreq { get; set; } = 10;
-        public double QuantizationStep { get; set; } = 0.1;
+        public double QuantizationStep { get; set; } = 0.01;
         public ChartWrapper ChartWrapper { get; set; } = null;
         public HistogramWrapper HistogramWrapper { get; set; } = null;
         public SignalWrapper SelectedSignal { get; set; } = null;
