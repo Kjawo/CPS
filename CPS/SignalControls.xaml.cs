@@ -1,5 +1,6 @@
 ﻿using CPS.Signal;
 using CPS.Signal.Converters;
+using CPS.Signal.Signals;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -135,6 +136,13 @@ namespace CPS
             ChartWrapper.Replot();
             HistogramWrapper.SetSignal(SignalSlot, Signal);
             HistogramWrapper.Replot();
+        }
+
+        private void GenerateImpulseResponse(object sender, RoutedEventArgs e)
+        {
+            Signal = new ImpulseResponse();
+            ChartWrapper.SetSignal(SignalSlot, Signal);
+            ChartWrapper.Replot();
         }
     }
 }

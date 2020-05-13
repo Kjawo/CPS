@@ -13,6 +13,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
 
         <Grid x:Name="ParamsGrid">
@@ -74,6 +75,7 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
             <Label Content="Typ sygnału" Grid.Column="0" Grid.Row="0" Margin="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" VerticalAlignment="Bottom" />
@@ -131,6 +133,8 @@
 
             <Button Content="Konwersja C/A" HorizontalAlignment="Center" Margin="0" Grid.Row="1" VerticalAlignment="Center" Width="100" Click="Analogize"/>
         </Grid>
+
+        <Button Grid.Row="4" Content="Generuj odpowiedź imp." HorizontalAlignment="Center" VerticalAlignment="Center" Click="GenerateImpulseResponse" />
     </Grid>
 
 </UserControl>
