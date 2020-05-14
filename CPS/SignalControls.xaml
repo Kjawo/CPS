@@ -149,6 +149,7 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
             <Label Grid.Column="1" Content="K" />
@@ -158,6 +159,7 @@
             <TextBox Text="{Binding M, FallbackValue=63, Mode=TwoWay, StringFormat=\{0:D\}}" Margin="10,5" Width="50" HorizontalAlignment="Right" Grid.Row="1" />
 
             <Button Content="Generuj odpowiedź imp." HorizontalAlignment="Center" VerticalAlignment="Center" Click="GenerateImpulseResponse" Margin="0,3,0,0" Grid.Row="2" Grid.ColumnSpan="2" />
+            <Button Content="Okno Hamminga" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ComputeHammingWindow" Margin="0,3,0,0" Grid.Row="3" Grid.ColumnSpan="2" />
         </Grid>
 
     </Grid>

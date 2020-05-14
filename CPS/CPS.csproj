@@ -98,6 +98,7 @@
     <Compile Include="Signal\Operations\Sum.cs" />
     <Compile Include="Signal\Params.cs" />
     <Compile Include="Signal\DigitalizedSignal.cs" />
+    <Compile Include="Signal\Signals\HammingWindow.cs" />
     <Compile Include="Signal\Signals\ImpulseNoise.cs" />
     <Compile Include="Signal\Signals\ImpulseResponse.cs" />
     <Compile Include="Signal\Signals\SineWaveFullRectified.cs" />

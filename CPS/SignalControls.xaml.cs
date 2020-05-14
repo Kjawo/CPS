@@ -131,6 +131,13 @@ namespace CPS
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ReplotChartAndHistogram();
         }
+        
+        private void ComputeHammingWindow(object sender, RoutedEventArgs e)
+        {
+            Signal = new HammingWindow(Signal, M);
+            ChartWrapper.SetSignal(SignalSlot, Signal);
+            ReplotChartAndHistogram();
+        }
 
         private void ReplotChartAndHistogram()
         {
