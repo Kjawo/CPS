@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace CPS.Signal.Signals
 {
-    class ImpulseResponse : DiscreteSignal
+    class LowPassImpulseResponse : DiscreteSignal
     {
-        public ImpulseResponse(int k, int m)
+        public LowPassImpulseResponse(int k, int m)
         {
             Values = GenerateValues(k, m);
         }

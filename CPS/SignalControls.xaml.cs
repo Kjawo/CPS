@@ -125,13 +125,20 @@ namespace CPS
         }
 
 
-        private void GenerateImpulseResponse(object sender, RoutedEventArgs e)
+        private void GenerateImpulseResponseLowpass(object sender, RoutedEventArgs e)
         {
-            Signal = new ImpulseResponse(K, M);
+            Signal = new LowPassImpulseResponse(K, M);
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ReplotChartAndHistogram();
         }
-        
+
+        private void GenerateImpulseResponseBandpass(object sender, RoutedEventArgs e)
+        {
+            Signal = new BandPassImpulseResponse(K, M);
+            ChartWrapper.SetSignal(SignalSlot, Signal);
+            ReplotChartAndHistogram();
+        }
+
         private void ComputeHammingWindow(object sender, RoutedEventArgs e)
         {
             Signal = new HammingWindow(Signal, M);
