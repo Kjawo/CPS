@@ -54,6 +54,7 @@
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -114,6 +115,7 @@
     <Compile Include="Signal\Signals\UnitStep.cs" />
     <Compile Include="Signal\SignalType.cs" />
     <Compile Include="Signal\StatsCalculator.cs" />
+    <Compile Include="Signal\Value.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

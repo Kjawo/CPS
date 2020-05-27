@@ -30,7 +30,7 @@ namespace CPS
             ChartValues<ObservablePoint> values = new ChartValues<ObservablePoint>();
             values.AddRange(
                 Signal.Values.Select(
-                    tuple => new ObservablePoint { X = tuple.Item1, Y = tuple.Item2 }
+                    tuple => new ObservablePoint { X = tuple.X.Real, Y = tuple.Y.Real }
                 )
             );
 

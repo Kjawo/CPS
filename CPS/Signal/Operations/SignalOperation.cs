@@ -9,7 +9,7 @@ namespace CPS.Signal.Operations
 
         public DiscreteSignal Process(DiscreteSignal a, DiscreteSignal b)
         {
-            List<Tuple<double, double>> newValues = NewValues(a, b);
+            List<Value> newValues = NewValues(a, b);
             return DiscreteSignal.ForParameters(Name, GetType(a.Type, b.Type), a.Frequency, newValues);
         }
 
@@ -20,6 +20,6 @@ namespace CPS.Signal.Operations
             return SignalType.CONTINUOUS;
         }
 
-        protected abstract List<Tuple<double, double>> NewValues(DiscreteSignal a, DiscreteSignal b);
+        protected abstract List<Value> NewValues(DiscreteSignal a, DiscreteSignal b);
     }
 }

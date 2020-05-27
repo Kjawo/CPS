@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace CPS.Signal.Operations
 {
@@ -7,21 +8,21 @@ namespace CPS.Signal.Operations
     {
         protected override string Name => "convoluted";
 
-        protected override List<Tuple<double, double>> NewValues(DiscreteSignal a, DiscreteSignal b)
+        protected override List<Value> NewValues(DiscreteSignal a, DiscreteSignal b)
         {
-            var values = new List<Tuple<double, double>>();
+            var values = new List<Value>();
             int p = a.Values.Count;
             int o = b.Values.Count;
             for (int n = 0; n < p + o - 1; n++)
             {
-                double value = 0;
+                Complex value = 0;
                 for (int k = 0; k < a.Values.Count; k++)
                 {
-                    double firstVal = a.Values[k].Item2;
-                    double secondVal = (n - k < 0 || n - k >= o) ? 0 : b.Values[n - k].Item2;
+                    Complex firstVal = a.Values[k].Y;
+                    Complex secondVal = (n - k < 0 || n - k >= o) ? 0 : b.Values[n - k].Y;
                     value += firstVal * secondVal;
                 }
-                values.Add(Tuple.Create(n * 1.0, value));
+                values.Add(new Value { X = n, Y = value });
             }
             return values;
         }

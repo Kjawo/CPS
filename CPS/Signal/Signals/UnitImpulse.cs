@@ -31,16 +31,16 @@ namespace CPS.Signal
 
         public override DiscreteSignal ToDiscrete(double Frequency)
         {
-            List<Tuple<double, double>> Values = new List<Tuple<double, double>>();
+            var Values = new List<Value>();
             double from = Params.t1;
             double to = from + Params.d;
             double step = 1 / Frequency;
             for (double x = from; x <= to; x += step)
             {
                 if (Math.Abs(x - Params.ts) < 0.0000001)
-                    Values.Add(Tuple.Create(x, Params.A));
+                    Values.Add(new Value { X = x, Y = Params.A });
                 else
-                    Values.Add(Tuple.Create(x, 0.0));
+                    Values.Add(new Value { X = x, Y = 0.0 });
             }
             return DiscreteSignal.ForParameters(Name, Type, Frequency, Values);
         }

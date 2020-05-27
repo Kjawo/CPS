@@ -1,27 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace CPS.Signal.Operations
 {
     public class IndirectCorrelation : SignalOperation
     {
         protected override string Name => "IndirectCorrelation";
-        protected override List<Tuple<double, double>> NewValues(DiscreteSignal a, DiscreteSignal b)
+        protected override List<Value> NewValues(DiscreteSignal a, DiscreteSignal b)
         {
-            var values = new List<Tuple<double, double>>();
+            var values = new List<Value>();
             
-            List<double> firstSignalItem2 = new List<double>();
+            List<Complex> firstSignalItem2 = new List<Complex>();
             foreach (var tuple in a.Values)
             {
-                firstSignalItem2.Add(tuple.Item2);
+                firstSignalItem2.Add(tuple.Y);
             }
 
             firstSignalItem2.Reverse();
             
             for(int i = 0; i < a.Values.Count; i++)
             {
-                values.Add(Tuple.Create( a.Values[i].Item1, firstSignalItem2[i]));
+                //values.Add(Tuple.Create(a.Values[i].X, firstSignalItem2[i]));
+                values.Add(new Value { X = a.Values[i].X, Y = firstSignalItem2[i] });
             }
             
             a.Values = values;

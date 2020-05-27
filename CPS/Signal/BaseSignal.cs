@@ -12,13 +12,13 @@ namespace CPS.Signal
 
         virtual public DiscreteSignal ToDiscrete(double Frequency)
         {
-            List<Tuple<double, double>> Values = new List<Tuple<double, double>>();
+            var Values = new List<Value>();
             double from = Params.t1;
             double to = from + Params.d;
             double step = 1 / Frequency;
             for (double x = from; x <= to; x += step)
             {
-                Values.Add(Tuple.Create(x, y(x)));
+                Values.Add(new Value { X = x, Y = y(x) });
             }
             return DiscreteSignal.ForParameters(Name, Type, Frequency, Values);
         }

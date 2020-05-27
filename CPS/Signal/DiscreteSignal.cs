@@ -9,10 +9,10 @@ namespace CPS.Signal
         public SignalType Type { get; protected set; }
         public string Name { get; protected set; }
         public double Frequency { get; private set; }
-        public List<Tuple<double, double>> Values { get; set; } = new List<Tuple<double, double>>();
+        public List<Value> Values { get; set; } = new List<Value>();
 
         public static DiscreteSignal ForParameters(string name, SignalType type, double frequency,
-            List<Tuple<double, double>> values)
+            List<Value> values)
         {
             DiscreteSignal signal = new DiscreteSignal();
             signal.Type = type;

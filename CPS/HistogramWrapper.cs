@@ -48,13 +48,13 @@ namespace CPS
             };
         }
 
-        private List<Tuple<double,int>> AggregateHistogram(List<Tuple<double, double>> values)
+        private List<Tuple<double,int>> AggregateHistogram(List<Value> values)
         {
-            double min = values.Min(point => point.Item2);
-            double max = values.Max(point => point.Item2);
+            double min = values.Min(point => point.Y.Real);
+            double max = values.Max(point => point.Y.Real);
             double step = (max - min) / HistogramGroupsCount;
 
-            return values.Select(tuple => Math.Floor((tuple.Item2 - min) / step))
+            return values.Select(tuple => Math.Floor((tuple.Y.Real - min) / step))
                 .GroupBy(value => value)
                 .Select(group => Tuple.Create(min + step * group.Key, group.Count()))
                 .ToList();

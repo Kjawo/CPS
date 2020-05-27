@@ -10,13 +10,13 @@ namespace CPS.Signal.Signals
             Values = BandPassValues(Values);
         }
 
-        private List<Tuple<double, double>> BandPassValues(List<Tuple<double, double>> values)
+        private List<Value> BandPassValues(List<Value> values)
         {
-            var updatedValues = new List<Tuple<double, double>>();
+            var updatedValues = new List<Value>();
             for (int n = 0; n < Values.Count; n++)
             {
-                var newValue = Values[n].Item2 * 2.0 * Math.Sin(Math.PI * n / 2.0);
-                updatedValues.Add(Tuple.Create(Values[n].Item1, newValue));
+                var newValue = Values[n].Y * 2.0 * Math.Sin(Math.PI * n / 2.0);
+                updatedValues.Add(new Value { X = Values[n].X, Y = newValue });
             }
             return updatedValues;
         }

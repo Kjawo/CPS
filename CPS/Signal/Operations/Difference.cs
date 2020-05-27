@@ -8,18 +8,17 @@ namespace CPS.Signal.Operations
     {
         protected override string Name => "diff";
 
-        protected override List<Tuple<double, double>> NewValues(DiscreteSignal a, DiscreteSignal b)
+        protected override List<Value> NewValues(DiscreteSignal a, DiscreteSignal b)
         {
-            var Aggregated = new List<Tuple<double, double>>();
+            var Aggregated = new List<Value>();
             Aggregated.AddRange(a.Values);
             Aggregated.AddRange(b.Values);
             var Added = Aggregated
-                .GroupBy(tuple => tuple.Item1)
-                .Select(group => new Tuple<double, double>(
-                    group.Key,
-                    group.Select(tuple => tuple.Item2).Aggregate((val1, val2) => val1 - val2))
-                )
-                .ToList();
+                .GroupBy(tuple => tuple.X)
+                .Select(group => new Value {
+                    X = group.Key,
+                    Y = group.Select(tuple => tuple.Y).Aggregate((val1, val2) => val1 - val2)
+                }).ToList();
             return Added;
         }
     }

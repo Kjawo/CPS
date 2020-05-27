@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace CPS.Signal
 {
@@ -22,14 +23,14 @@ namespace CPS.Signal
                 .ToList();
         }
 
-        private List<Tuple<double, double>> Sample(DiscreteSignal signal, double frequency)
+        private List<Value> Sample(DiscreteSignal signal, double frequency)
         {
-            var values = new List<Tuple<double, double>>();
+            var values = new List<Value>();
             double samplingStep = 1 / frequency;
-            double nextValidTime = signal.Values[0].Item1;
+            double nextValidTime = signal.Values[0].X.Real;
             foreach (var value in signal.Values)
             {
-                if (value.Item1 >= nextValidTime)
+                if (value.X.Real >= nextValidTime)
                 {
                     values.Add(value);
                     nextValidTime += samplingStep;
@@ -40,10 +41,10 @@ namespace CPS.Signal
             return values;
         }
 
-        private Tuple<double, double> Quantize(Tuple<double, double> value)
+        private Value Quantize(Value value)
         {
-            double newValue = Math.Round(value.Item2 / quantizationStep) * quantizationStep;
-            return Tuple.Create(value.Item1, newValue);
+            double newValue = Math.Round(value.X.Real / quantizationStep) * quantizationStep;
+            return new Value { X = value.X, Y = new Complex(newValue, 0) };
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace CPS.Signal.Signals
 {
@@ -10,15 +11,15 @@ namespace CPS.Signal.Signals
             Values = GenerateValues(signal, m);
         }
 
-        private List<Tuple<double, double>> GenerateValues(DiscreteSignal signal, int m)
+        private List<Value> GenerateValues(DiscreteSignal signal, int m)
         {
-            var values = new List<Tuple<double, double>>();
+            var values = new List<Value>();
             double w;
 
             for (int i = 0; i < signal.Values.Count; i++)
             {
-                w =  0.53836 - (0.46164 * Math.Cos(2 * Math.PI * i / m));
-                values.Add(Tuple.Create(signal.Values[i].Item1, w * signal.Values[i].Item2));
+                w = 0.53836 - (0.46164 * Math.Cos(2 * Math.PI * i / m));
+                values.Add(new Value { X = signal.Values[i].X, Y = w * signal.Values[i].Y });
             }
 
             return values;

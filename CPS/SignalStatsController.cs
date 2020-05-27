@@ -13,7 +13,7 @@ namespace CPS
         {
             if (signal != null)
             {
-                List<double> samples = signal.Values.Select(tuple => tuple.Item2).ToList();
+                List<double> samples = signal.Values.Select(tuple => tuple.Y.Real).ToList();
                 double t1 = parameters.t1;
                 double t2 = t1 + parameters.d;
                 bool isDiscrete = false;
@@ -25,11 +25,13 @@ namespace CPS
             }
         }
 
-        public void CalculateSignalConversionStats(List<Tuple<double, double>> originalValues, List<Tuple<double, double>> sampledSignalValues)
+        public void CalculateSignalConversionStats(List<Value> originalValues, List<Value> sampledSignalValues)
         {
-            Stats.MeanSquaredError = StatsCalculator.MeanSquaredError(originalValues, sampledSignalValues).ToString("0." + new string('#', 339));
-            Stats.SignalNoiseRatio = StatsCalculator.SignalNoiseRatio(originalValues, sampledSignalValues).ToString("0." + new string('#', 339));
-            Stats.MaxDifference = StatsCalculator.MaxDifference(originalValues, sampledSignalValues).ToString("0." + new string('#', 339));
+            var originalValuesReal = originalValues.Select(v => Tuple.Create(v.X.Real, v.Y.Real)).ToList();
+            var sampledSignalValuesReal = sampledSignalValues.Select(v => Tuple.Create(v.X.Real, v.Y.Real)).ToList();
+            Stats.MeanSquaredError = StatsCalculator.MeanSquaredError(originalValuesReal, sampledSignalValuesReal).ToString("0." + new string('#', 339));
+            Stats.SignalNoiseRatio = StatsCalculator.SignalNoiseRatio(originalValuesReal, sampledSignalValuesReal).ToString("0." + new string('#', 339));
+            Stats.MaxDifference = StatsCalculator.MaxDifference(originalValuesReal, sampledSignalValuesReal).ToString("0." + new string('#', 339));
         }
     }
 }

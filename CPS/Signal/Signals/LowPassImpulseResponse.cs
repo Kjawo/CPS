@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace CPS.Signal.Signals
 {
@@ -10,17 +11,17 @@ namespace CPS.Signal.Signals
             Values = GenerateValues(k, m);
         }
 
-        private List<Tuple<double, double>> GenerateValues(int k, int m)
+        private List<Value> GenerateValues(int k, int m)
         {
-            var values = new List<Tuple<double, double>>();
+            var values = new List<Value>();
             for (int n = 0; n < m; n++)
             {
-                double val = 0;
+                Complex val = 0;
                 if (n == (m - 1) / 2)
                     val = 2.0 / k;
                 else
                     val = Math.Sin(2 * Math.PI * (n - ((m - 1) / 2)) / k) / (Math.PI * (n - ((m - 1) / 2)));
-                values.Add(Tuple.Create((double)n, val));
+                values.Add(new Value { X = n, Y = val });
             }
             return values;
         }

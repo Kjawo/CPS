@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,13 +9,13 @@ namespace CPS.Signal.Converters
 {
     class SincConverter : DigitalToAnalogConverter
     {
-        protected override List<Tuple<double, double>> NewValues(List<Tuple<double, double>> signalValues,
+        protected override List<Value> NewValues(List<Value> signalValues,
             List<double> newTimeValues, double frequency)
         {
-            var values = new List<Tuple<double, double>>();
+            var values = new List<Value>();
 
             double Ts = 1 / frequency;
-            var sum = 0.0d;
+            var sum = Complex.Zero;
             int SamplesCount = 100;
             
             foreach (var timeValue in newTimeValues)
@@ -24,11 +25,11 @@ namespace CPS.Signal.Converters
                 {
                     if (n >= 0 && n < signalValues.Count)
                     {
-                        sum += signalValues[n].Item2 * SinC(timeValue / Ts - n);
+                        sum += signalValues[n].Y * SinC(timeValue / Ts - n);
                     }
                 }
 
-                values.Add(Tuple.Create(timeValue, sum));
+                values.Add(new Value { X = timeValue, Y = sum });
             }
             return values;
         }
