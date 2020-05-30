@@ -89,6 +89,7 @@
     <Compile Include="Signal\Converters\ZeroOrderHoldConverter.cs" />
     <Compile Include="Signal\Operations\Convolution.cs" />
     <Compile Include="Signal\Operations\DirectCorrelation.cs" />
+    <Compile Include="Signal\Operations\FastFourierTransform.cs" />
     <Compile Include="Signal\Operations\IndirectCorrelation.cs" />
     <Compile Include="Signal\Operations\Difference.cs" />
     <Compile Include="Signal\Operations\Division.cs" />

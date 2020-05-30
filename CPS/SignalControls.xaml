@@ -79,6 +79,7 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
 
             <Label Content="Typ sygnału" Grid.Column="0" Grid.Row="0" Margin="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" VerticalAlignment="Bottom" />
@@ -100,6 +101,12 @@
             <Button Content="Wyczyść" Margin="3,3,6,6" Width="75"
                         HorizontalContentAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1"
                         Click="ClearSignal" HorizontalAlignment="Left" />
+            <Button Content="FFT" Margin="6,3,3,6" Width="75"
+                        HorizontalContentAlignment="Center" Grid.Row="4" Grid.Column="0"
+                        Click="FFT" HorizontalAlignment="Right" VerticalAlignment="Top" />
+            <Button Content="IFFT" Margin="6,3,3,6" Width="75"
+                        HorizontalContentAlignment="Center" Grid.Row="4" Grid.Column="1"
+                        Click="Generate" HorizontalAlignment="Left" VerticalAlignment="Top" />
         </Grid>
 
         <Label Content="Konwersja A/C i C/A" Grid.Row="3" HorizontalAlignment="Center" FontWeight="Bold" />

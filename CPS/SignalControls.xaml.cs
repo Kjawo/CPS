@@ -2,9 +2,12 @@
 using CPS.Signal.Converters;
 using CPS.Signal.Signals;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using CPS.Signal.Operations;
+using System.Numerics;
 
 namespace CPS
 {
@@ -152,6 +155,25 @@ namespace CPS
             ChartWrapper.Replot();
             HistogramWrapper.SetSignal(SignalSlot, Signal);
             HistogramWrapper.Replot();
+        }
+
+        private void FFT(object sender, RoutedEventArgs e)
+        {
+            var input = Signal.Values.Select(value => value.Y).ToList();
+            var fftOutput = FastFourierTransform.Transform(input, 1);
+            var output = new List<Value>();
+            for (int i = 0; i < fftOutput.Count(); i++)
+            {
+                var value = new Value
+                {
+                    X = new Complex(i, 0),
+                    Y = new Complex(fftOutput[i].Real, 0)
+                };
+                output.Add(value);
+            }
+            Signal = DiscreteSignal.ForParameters("fft", CPS.Signal.SignalType.CONTINUOUS, 1, output);
+            ChartWrapper.SetSignal(SignalSlot, Signal);
+            ChartWrapper.Replot();
         }
     }
 }
