@@ -144,7 +144,7 @@ namespace CPS
 
         private void ComputeHammingWindow(object sender, RoutedEventArgs e)
         {
-            Signal = new HammingWindow(Signal, M);
+            Signal = new  HammingWindow(Signal, M);
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ReplotChartAndHistogram();
         }
@@ -157,6 +157,8 @@ namespace CPS
             HistogramWrapper.Replot();
         }
 
+
+        
         private void FFT(object sender, RoutedEventArgs e)
         {
             var input = Signal.Values.Select(value => value.Y).ToList();
@@ -172,6 +174,31 @@ namespace CPS
                 output.Add(value);
             }
             Signal = DiscreteSignal.ForParameters("fft", CPS.Signal.SignalType.CONTINUOUS, 1, output);
+            ChartWrapper.SetSignal(SignalSlot, Signal);
+            ChartWrapper.Replot();
+        }
+        
+        private void DB6(object sender, RoutedEventArgs e)
+        {
+            var waveletTransformationOutput = WaveletTransform.WaveletTransformation(Signal);
+            var output = new List<Value>();
+            for (int i = 0; i < waveletTransformationOutput.Count(); i++)
+            {
+                var value = new Value
+                {
+                    X = new Complex(i, 0),
+                    Y = new Complex(waveletTransformationOutput[i].Real, 0)
+                };
+                output.Add(value);
+            }
+            Signal = DiscreteSignal.ForParameters("DB6", CPS.Signal.SignalType.CONTINUOUS, 1, output);
+            ChartWrapper.SetSignal(SignalSlot, Signal);
+            ChartWrapper.Replot();
+        }
+        
+        private void DB6reverse(object sender, RoutedEventArgs e)
+        {
+            Signal = WaveletTransform.WaveletBackwardTransformation(Signal);
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ChartWrapper.Replot();
         }

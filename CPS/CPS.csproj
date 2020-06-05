@@ -98,6 +98,7 @@
     <Compile Include="Signal\DiscreteSignal.cs" />
     <Compile Include="Signal\BaseSignal.cs" />
     <Compile Include="Signal\Operations\Sum.cs" />
+    <Compile Include="Signal\Operations\WaveletTransform.cs" />
     <Compile Include="Signal\Params.cs" />
     <Compile Include="Signal\DigitalizedSignal.cs" />
     <Compile Include="Signal\Signals\BandPassImpulseResponse.cs" />
