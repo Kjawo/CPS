@@ -51,6 +51,7 @@ namespace CPS
             InitializeComponent();
             this.DataContext = this;
             Chart.DataContext = ChartWrapper;
+            ChartImaginary.DataContext = ChartWrapper;
             FirstSignalControls.ChartWrapper = ChartWrapper;
             SecondSignalControls.ChartWrapper = ChartWrapper;
             operationResultSignalControls.ChartWrapper = ChartWrapper;
@@ -88,7 +89,15 @@ namespace CPS
             {
                 int i = ((int)OperationSlot.SelectedItem) - 1;
                 DiscreteSignal result = SelectedOperation.Operation.Process(first, second);
-                operationResultSignalControls.Signal = result;
+                switch (i)
+                {
+                    case 0: FirstSignalControls.Signal = result;
+                        break;
+                    case 1: SecondSignalControls.Signal = result;
+                        break;
+                    case 2: operationResultSignalControls.Signal = result;
+                        break;
+                }
                 ChartWrapper.SetSignal(i, result);
                 ChartWrapper.Replot();
                 HistogramWrapper.SetSignal(i, result);

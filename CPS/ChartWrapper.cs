@@ -9,32 +9,43 @@ namespace CPS
 {
     public class ChartWrapper
     {
-        public SeriesCollection SeriesCollection { get; } = new SeriesCollection();
+        public SeriesCollection SeriesCollectionReal { get; } = new SeriesCollection();
+        public SeriesCollection SeriesCollectionImaginary { get; } = new SeriesCollection();
         public Func<double, string> XFormatter { get; } = value => value.ToString();
         public Func<double, string> YFormatter { get; } = value => value.ToString();
-        private Series[] series = { null, null, null };
+        private Series[] seriesReal = { null, null, null };
+        private Series[] seriesImaginary = { null, null, null };
 
         public void Clear()
         {
-            SeriesCollection.Clear();
+            SeriesCollectionReal.Clear();
+            SeriesCollectionImaginary.Clear();
         }
 
         public void SetSignal(int n, DiscreteSignal Signal)
         {
             if (Signal == null)
             {
-                series[n] = null;
+                seriesReal[n] = null;
+                seriesImaginary[n] = null;
                 return;
             }
 
-            ChartValues<ObservablePoint> values = new ChartValues<ObservablePoint>();
-            values.AddRange(
+            ChartValues<ObservablePoint> valuesReal = new ChartValues<ObservablePoint>();
+            ChartValues<ObservablePoint> valuesImaginary = new ChartValues<ObservablePoint>();
+            valuesReal.AddRange(
                 Signal.Values.Select(
                     tuple => new ObservablePoint { X = tuple.X.Real, Y = tuple.Y.Real }
                 )
             );
+            valuesImaginary.AddRange(
+                Signal.Values.Select(
+                    tuple => new ObservablePoint { X = tuple.X.Real, Y = tuple.Y.Imaginary }
+                )
+            );
 
-            series[n] = CreateSeries(n, Signal, values);
+            seriesReal[n] = CreateSeries(n, Signal, valuesReal);
+            seriesImaginary[n] = CreateSeries(n, Signal, valuesImaginary);
         }
 
         private Series CreateSeries(int n, DiscreteSignal signal, ChartValues<ObservablePoint> values)
@@ -68,11 +79,17 @@ namespace CPS
 
         public void Replot()
         {
-            SeriesCollection.Clear();
-            foreach (var serie in series)
+            SeriesCollectionReal.Clear();
+            SeriesCollectionImaginary.Clear();
+            foreach (var serie in seriesReal)
             {
                 if (serie != null)
-                    SeriesCollection.Add(serie);
+                    SeriesCollectionReal.Add(serie);
+            }
+            foreach (var serie in seriesImaginary)
+            {
+                if (serie != null)
+                    SeriesCollectionImaginary.Add(serie);
             }
         }
     }

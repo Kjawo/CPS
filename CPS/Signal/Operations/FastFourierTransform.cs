@@ -11,55 +11,18 @@ namespace CPS.Signal.Operations
     {
         public static List<Complex> Transform(List<Complex> signal, int Is)
         {
-            int n = 1;
-            while (n << 1 <= signal.Count())
-                n = n << 1;
-
-            List<Complex> b, c;
-            var s = new List<Complex>();
-            var t = new List<Complex>();
-
-            var a = signal.Take(n).ToList();
-            var x = new List<Complex>();
-
-            if (n == 1)
+            var result = new List<Complex>();
+            var N = signal.Count;
+            for (int k = 0; k < N; k++)
             {
-                x.Add(a[0]);
-                return x;
+                Complex Xk = 0;
+                for (int n = 0; n < N; n++)
+                {
+                    Xk += signal[n] * Complex.Exp(-1 * (Complex.ImaginaryOne * 2 * Math.PI / N) * k * n);
+                }
+                result.Add(Xk);
             }
-
-            int nh = n / 2;
-            
-            for (int k = 0; k < nh; k++)
-            {
-                s.Add(a[k]);
-                t.Add(a[k + nh]);
-            }
-
-            for (int k = 0; k < nh; k++)
-            {
-                var tempS = s[k];
-                var tempT = t[k];
-                s[k] = tempS + tempT;
-                t[k] = tempS - tempT;
-            }
-
-            double v = Is * 0.5;
-            for (int k = 0; k < nh; k++)
-            {
-                t[k] = t[k] * Complex.Exp(v * 2.0 * Math.PI * Complex.ImaginaryOne * k / nh);
-            }
-
-            b = FastFourierTransform.Transform(s, Is);
-            c = FastFourierTransform.Transform(t, Is);
-
-            for (int k = 0; k < nh; k++)
-            {
-                x.Add(b[k]);
-                x.Add(c[k]);
-            }
-
-            return x;
+            return result;
         }
     }
 }
