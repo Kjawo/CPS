@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:CPS"
         xmlns:signal="clr-namespace:CPS.Signal"
         mc:Ignorable="d"
-        Title="Cyfrowe przetwarzanie sygnałów" Width="1200" Height="827">
+        Title="Cyfrowe przetwarzanie sygnałów" Width="1200" Height="1042">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

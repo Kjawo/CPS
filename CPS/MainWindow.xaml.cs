@@ -35,7 +35,7 @@ namespace CPS
         public OperationWrapper SelectedOperation { get; set; }
         private SignalControls operationResultSignalControls = new SignalControls(); 
 
-        double frequency = 200;
+        double frequency = 16;
         public double Frequency
         {
             get => frequency;

@@ -2,6 +2,6 @@
 {
     public enum SignalType
     {
-        CONTINUOUS, DISCRETE
+        CONTINUOUS, DISCRETE, FOURIER
     }
 }

@@ -52,7 +52,7 @@ namespace CPS
 
         public string Title { get; set; } = "";
         public int SignalSlot { get; set; } = 0;
-        public double Frequency { get; set; } = 200;
+        public double Frequency { get; set; } = 16;
         public double SamplingFreq { get; set; } = 10;
         public double QuantizationStep { get; set; } = 0.01;
         public ChartWrapper ChartWrapper { get; set; } = null;
@@ -156,10 +156,27 @@ namespace CPS
             HistogramWrapper.SetSignal(SignalSlot, Signal);
             HistogramWrapper.Replot();
         }
-
-
         
         private void FFT(object sender, RoutedEventArgs e)
+        {
+            var input = Signal.Values.Select(value => value.Y).ToList();
+            var fftOutput = FastFourierTransform.Transform(input, -1);
+            var output = new List<Value>();
+            for (int i = 0; i < fftOutput.Count(); i++)
+            {
+                var value = new Value
+                {
+                    X = new Complex(i, 0),
+                    Y = fftOutput[i]
+                };
+                output.Add(value);
+            }
+            Signal = DiscreteSignal.ForParameters("fft", CPS.Signal.SignalType.FOURIER, 1, output);
+            ChartWrapper.SetSignal(SignalSlot, Signal);
+            ChartWrapper.Replot();
+        }
+
+        private void IFFT(object sender, RoutedEventArgs e)
         {
             var input = Signal.Values.Select(value => value.Y).ToList();
             var fftOutput = FastFourierTransform.Transform(input, 1);
@@ -169,7 +186,7 @@ namespace CPS
                 var value = new Value
                 {
                     X = new Complex(i, 0),
-                    Y = new Complex(fftOutput[i].Real, 0)
+                    Y = fftOutput[i]
                 };
                 output.Add(value);
             }
@@ -177,7 +194,7 @@ namespace CPS
             ChartWrapper.SetSignal(SignalSlot, Signal);
             ChartWrapper.Replot();
         }
-        
+
         private void DB6(object sender, RoutedEventArgs e)
         {
             var waveletTransformationOutput = WaveletTransform.WaveletTransformation(Signal);
