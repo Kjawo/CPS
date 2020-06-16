@@ -72,16 +72,6 @@ namespace CPS
                         LineSmoothness = 0
                     };
 
-                case SignalType.FOURIER:
-                    return new ColumnSeries
-                    {
-                        Title = signal.Name,
-                        Values = values,
-                        MaxColumnWidth = 5.0,
-                        MinHeight = 50.0,
-                        Fill = ChartColors.List[n]
-                    };
-
                 default:
                     throw new ArgumentOutOfRangeException();
             }
