@@ -159,27 +159,18 @@ namespace CPS
         
         private void FFT(object sender, RoutedEventArgs e)
         {
-            var input = Signal.Values.Select(value => value.Y).ToList();
-            var fftOutput = FastFourierTransform.Transform(input, -1);
-            var output = new List<Value>();
-            for (int i = 0; i < fftOutput.Count(); i++)
-            {
-                var value = new Value
-                {
-                    X = new Complex(i, 0),
-                    Y = fftOutput[i]
-                };
-                output.Add(value);
-            }
-            Signal = DiscreteSignal.ForParameters("fft", CPS.Signal.SignalType.FOURIER, 1, output);
-            ChartWrapper.SetSignal(SignalSlot, Signal);
-            ChartWrapper.Replot();
+            FFTTransform(FastFourierTransform.Forward);
         }
 
         private void IFFT(object sender, RoutedEventArgs e)
         {
+            FFTTransform(FastFourierTransform.Inverse);
+        }
+
+        private void FFTTransform(Func<List<Complex>, List<Complex>> transformFunc)
+        {
             var input = Signal.Values.Select(value => value.Y).ToList();
-            var fftOutput = FastFourierTransform.Transform(input, 1);
+            var fftOutput = transformFunc(input);
             var output = new List<Value>();
             for (int i = 0; i < fftOutput.Count(); i++)
             {

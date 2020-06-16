@@ -32,7 +32,22 @@ namespace CPS.Signal.Operations
             }
         }
 
-        public static List<Complex> Transform(List<Complex> input, int direction)
+        public static List<Complex> Forward(List<Complex> input)
+        {
+            return Transform(input, -1);
+        }
+
+        public static List<Complex> Inverse(List<Complex> input)
+        {
+            var result = Transform(input, 1);
+            for (int i = 0; i < input.Count; i++)
+            {
+                result[i] = result[i] / input.Count;
+            }
+            return result;
+        }
+
+        private static List<Complex> Transform(List<Complex> input, int direction)
         {
             var NTotal = (int) Math.Pow(2, Math.Floor(Math.Log(input.Count, 2)));
             var X = new Complex[NTotal];
